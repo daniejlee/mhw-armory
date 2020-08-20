@@ -1,10 +1,17 @@
 const container = document.querySelector('.container')
+const navbar = document.querySelector('.navbar')
 let armorType = null;
 let currentPage = 'homePage'
+const home = navbar.querySelector('.home-button')
+
+home.addEventListener('click', function(){
+  currentPage = 'homePage'
+  navbar.classList.add('d-none')
+  renderData();
+})
 //let previousPage = '';
 //back button
 //const backButton = document.createElement('button')
-
 
 function getData(event){
   armorType = event.target.id;
@@ -81,6 +88,7 @@ function renderHomePage() {
 
 
 function renderShopCategories() {
+  navbar.classList.remove('d-none')
   let row = document.createElement('div')
   let col = document.createElement('div')
   const helmsButton = document.createElement('button')
@@ -125,35 +133,43 @@ function renderItemsList(data) {
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
     col.classList.add('col-11', 'contents-column')
+    col.addEventListener('click', function () {
+      console.log(event.target);
+      console.log(data[event.target.id])
+    })
 
   for (let i = 100; i < 150; i++) {
-    const item = document.createElement('button')
-    const buttonContents = document.createElement('div');
-    const icon = document.createElement('img')
-    const imgCol = document.createElement('div')
-    const textCol = document.createElement('div')
-    const gearName = document.createElement('p')
-    const gearPrice = document.createElement('p')
+    if(data[i].assets){
+      const item = document.createElement('button')
+      const buttonContents = document.createElement('div');
+      const icon = document.createElement('img')
+      const imgCol = document.createElement('div')
+      const textCol = document.createElement('div')
+      const gearName = document.createElement('p')
+      const gearPrice = document.createElement('p')
 
-    buttonContents.classList.add('row', 'vertical-align');
-    imgCol.classList.add('col-3', 'img-container')
-    textCol.classList.add('col', 'gear-text')
+      item.id = i;
 
+      buttonContents.classList.add('row', 'vertical-align');
+      imgCol.classList.add('col-3', 'img-container')
+      textCol.classList.add('col', 'gear-text')
 
-    item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
-    icon.src = data[i].assets.imageMale;
-    icon.width = "65"
-    gearName.textContent = data[i].name;
-    gearPrice.textContent = "Price: "
+      item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
+      icon.src = data[i].assets.imageMale;
+      icon.width = "67"
+      gearName.textContent = data[i].name;
+      gearPrice.textContent = "Price: "
 
-    imgCol.appendChild(icon);
-    textCol.append(gearName, gearPrice)
-    buttonContents.append(imgCol, textCol)
-    item.append(buttonContents)
-    col.appendChild(item)
-    row.appendChild(col)
-    container.appendChild(row)
+      imgCol.appendChild(icon);
+      textCol.append(gearName, gearPrice)
+      buttonContents.append(imgCol, textCol)
+      item.append(buttonContents)
+      col.appendChild(item)
+      row.appendChild(col)
+      container.appendChild(row)
+    }
   }
+
 }
 
 
