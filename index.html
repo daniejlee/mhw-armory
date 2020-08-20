@@ -7,28 +7,88 @@
   <title>API Hackathon</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
 
 <body onload="renderData()">
-  <nav class="navbar navbar-light justify-content-between nav-style d-none">
+  <nav class="navbar fixed-top navbar-light justify-content-between nav-style d-none">
     <a class="home-button" href="#">Home</a>
   </nav>
   <div class="container">
-    <!--
-      <div class="row justify-content-center categories">
-        <div class="col-11 contents-column">
-          <button type="button" id="head" class="btn shop-button btn-lg btn-block">Helmets</button>
-          <button type="button" id="chest" class="btn shop-button btn-lg btn-block">Chests</button>
-          <button type="button" id="gloves" class="btn shop-button btn-lg btn-block">Arms</button>
-          <button type="button" id="waist" class="btn shop-button btn-lg btn-block">Waist</button>
-          <button type="button" id="legs" class="btn shop-button btn-lg btn-block">Legs</button>
+
+  </div>
+
+  <!--Modal Overlay-->
+  <div class="modal fade" id="gearStats" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <!--actual modal window-->
+      <div class="modal-content container">
+        <!--Image and Gear Name-->
+        <div class="row stats-header vertical-align">
+          <div class="col-4 img-container">
+            <img id="stats-image" src="https://assets.mhw-db.com/armor/1670b4719dbca20fb98a3a2e5b7995d4ab740d85.70ca8a43f656a675a5e3c9ef32c75e07.png" width="100">
+          </div>
+          <div class="col gear-text">
+            <h3 class="text-center" id="stats-name">Rath Soul Helm Alpha</h3>
+          </div>
+        </div>
+        <!--Modal Body-->
+        <div class="modal-body">
+        <!--Defenses Stats-->
+          <div class="row">
+            <div class="col defense-stats">
+              <div>Defense: <span id="defense">100</span></div>
+              <div>Fire Resist: <span id="fire-res">100</span></div>
+              <div>Water Resist: <span id="water-res">100</span></div>
+            </div>
+            <div class="col defense-stats">
+              <div>Thunder Resist: <span id="thunder-res">100</span></div>
+              <div>Ice Resist: <span id="ice-res">100</span></div>
+              <div>Dragon Resist: <span id="dragon-res">100</span></div>
+            </div>
+          </div>
+          <!--Slots-->
+          <div class="row">
+            <div class="col text-center">
+              <div class="slots-skills">Slots:
+                <span id="gear-slot1">0</span>
+                <span>-</span>
+                <span id="gear-slot2">0</span>
+                <span>-</span>
+                <span id="gear-slot3">0</span>
+              </div>
+            </div>
+          </div>
+          <!--Armor Skills-->
+          <div class="row">
+            <div class="col skills text-center">
+              <div id="skills-list" class="slots-skills">Skills
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!--footer/buttons-->
+        <div class="modal-footer">
+          <div class="button-container">
+            <button type="button" class="btn purchase-button btn-success">
+              <div class="row">
+                <div class="col-7">Purchase</div>
+                <div class="col">100g</div>
+              </div>
+            </button>
+            <button type="button" class="btn close-button btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </div>
         </div>
       </div>
-    -->
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="main.js"></script>
 </body>
 

@@ -59,7 +59,7 @@ function renderHomePage() {
   contentCol.classList.add('col-9', 'justify-content-center')
   titleRow.classList.add('row', 'justify-content-center')
   title.classList.add('app-title')
-  title.textContent = "Monster Hunter World Armory";
+  title.textContent = "MONSTER HUNTER WORLD ARMORY";
 
   buttonRow.classList.add('row', 'button-row', 'justify-content-center')
   browseButton.classList.add('btn', 'landing-button', 'btn-lg', 'btn-block')
@@ -83,6 +83,7 @@ function renderHomePage() {
   inventoryButton.addEventListener('click', function(){
     //todo
     console.log("to do")
+    $("#gearStats").modal('show')
   })
 }
 
@@ -122,23 +123,26 @@ function renderShopCategories() {
   col.addEventListener('click', function(){
     currentPage = 'itemsList'
     getData(event)
+
   })
 
 }
 
 function renderItemsList(data) {
 //ADD SEARCH FEATURE
-
+  console.log(data)
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
     col.classList.add('col-11', 'contents-column')
+
+    //SHOW GEAR STATS MODAL
     col.addEventListener('click', function () {
-      console.log(event.target);
-      console.log(data[event.target.id])
+      $("#gearStats").modal('show')
+      renderGearStats(event, data[event.target.id]);
     })
 
-  for (let i = 100; i < 150; i++) {
+  for (let i = 0; i < data.length; i++) {
     if(data[i].assets){
       const item = document.createElement('button')
       const buttonContents = document.createElement('div');
@@ -158,7 +162,7 @@ function renderItemsList(data) {
       icon.src = data[i].assets.imageMale;
       icon.width = "67"
       gearName.textContent = data[i].name;
-      gearPrice.textContent = "Price: "
+      gearPrice.textContent = "Price: " + calculatePrice(data[i]);
 
       imgCol.appendChild(icon);
       textCol.append(gearName, gearPrice)
@@ -169,11 +173,57 @@ function renderItemsList(data) {
       container.appendChild(row)
     }
   }
-
 }
 
 
 
+function renderGearStats(event, gearPiece){
+  console.log(gearPiece)
+  $("#stats-image").attr("src", gearPiece.assets.imageMale)
+  $("#stats-name").text(gearPiece.name)
+  $("#defense").text(gearPiece.defense.base)
+  $("#fire-res").text(gearPiece.resistances.fire)
+  $("#water-res").text(gearPiece.resistances.water)
+  $("#thunder-res").text(gearPiece.resistances.thunder)
+  $("#ice-res").text(gearPiece.resistances.ice)
+  $("#dragon-res").text(gearPiece.resistances.dragon)
+
+  //clear slots
+    $(`#gear-slot1`).text("0")
+    $(`#gear-slot2`).text("0")
+    $(`#gear-slot3`).text("0")
+  //set slots
+  for(let i = 0; i < gearPiece.slots.length; i++){
+    $(`#gear-slot${i + 1}`).text(gearPiece.slots[i].rank)
+  }
+
+  //clear skills
+  $("#skills-list").empty();
+  //set skills
+  for(let i = 0; i < gearPiece.skills.length; i++){
+    let skillRow = document.createElement('div')
+    let skillName = document.createElement('span')
+    let skillLevel = document.createElement('span')
+
+    skillName.classList.add('defense-stats')
+    skillLevel.classList.add('defense-stats')
+
+    skillRow.classList.add('skills-list')
+    skillName.textContent = gearPiece.skills[i].skillName
+    skillLevel.textContent = " Lv. " + gearPiece.skills[i].level;
+
+    skillRow.append(skillName, skillLevel);
+    $("#skills-list").append(skillRow)
+  }
+}
+
+function calculatePrice(data) {
+  let itemPrice = 0;
+  for(let i = 0; i < data.crafting.materials.length; i++){
+    itemPrice += data.crafting.materials[i].item.value;
+  }
+  return itemPrice
+}
 
 /* // currency exchange
 $.ajax({
