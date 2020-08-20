@@ -1,10 +1,26 @@
 const container = document.querySelector('.container')
+const navbar = document.querySelector('.navbar')
 let armorType = null;
+let exchangeRate = 1;
 let currentPage = 'homePage'
+const home = navbar.querySelector('.home-button')
+
+$.ajax({
+  method: "GET",
+  url: "https://openexchangerates.org/api/latest.json?app_id=3c0071a1e8ba45adaf2ba951240a0f81&symbols=JPY",
+  success: function (data) {
+    exchangeRate = data.rates.JPY;
+  }
+});
+
+home.addEventListener('click', function(){
+  currentPage = 'homePage'
+  navbar.classList.add('d-none')
+  renderData();
+})
 //let previousPage = '';
 //back button
 //const backButton = document.createElement('button')
-
 
 function getData(event){
   armorType = event.target.id;
@@ -52,7 +68,7 @@ function renderHomePage() {
   contentCol.classList.add('col-9', 'justify-content-center')
   titleRow.classList.add('row', 'justify-content-center')
   title.classList.add('app-title')
-  title.textContent = "Monster Hunter World Armory";
+  title.textContent = "MONSTER HUNTER WORLD ARMORY";
 
   buttonRow.classList.add('row', 'button-row', 'justify-content-center')
   browseButton.classList.add('btn', 'landing-button', 'btn-lg', 'btn-block')
@@ -81,6 +97,7 @@ function renderHomePage() {
 
 
 function renderShopCategories() {
+  navbar.classList.remove('d-none')
   let row = document.createElement('div')
   let col = document.createElement('div')
   const helmsButton = document.createElement('button')
@@ -114,66 +131,101 @@ function renderShopCategories() {
   col.addEventListener('click', function(){
     currentPage = 'itemsList'
     getData(event)
+
   })
 
 }
 
 function renderItemsList(data) {
 //ADD SEARCH FEATURE
-
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
     col.classList.add('col-11', 'contents-column')
 
-  for (let i = 100; i < 150; i++) {
-    const item = document.createElement('button')
-    const buttonContents = document.createElement('div');
-    const icon = document.createElement('img')
-    const imgCol = document.createElement('div')
-    const textCol = document.createElement('div')
-    const gearName = document.createElement('p')
-    const gearPrice = document.createElement('p')
+    //SHOW GEAR STATS MODAL
+    col.addEventListener('click', function () {
+      $("#gearStats").modal('show')
+      renderGearStats(event, data[event.target.id]);
+    })
 
-    buttonContents.classList.add('row', 'vertical-align');
-    imgCol.classList.add('col-3', 'img-container')
-    textCol.classList.add('col', 'gear-text')
+  for (let i = 0; i < data.length; i++) {
+    if(data[i].assets){
+      const item = document.createElement('button')
+      const buttonContents = document.createElement('div');
+      const icon = document.createElement('img')
+      const imgCol = document.createElement('div')
+      const textCol = document.createElement('div')
+      const gearName = document.createElement('p')
+      const gearPrice = document.createElement('p')
 
+      item.id = i;
 
-    item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
-    icon.src = data[i].assets.imageMale;
-    icon.width = "65"
-    gearName.textContent = data[i].name;
-    gearPrice.textContent = "Price: "
+      buttonContents.classList.add('row', 'vertical-align');
+      imgCol.classList.add('col-3', 'img-container')
+      textCol.classList.add('col', 'gear-text')
 
-    imgCol.appendChild(icon);
-    textCol.append(gearName, gearPrice)
-    buttonContents.append(imgCol, textCol)
-    item.append(buttonContents)
-    col.appendChild(item)
-    row.appendChild(col)
-    container.appendChild(row)
+      item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
+      icon.src = data[i].assets.imageMale;
+      icon.width = "67"
+      gearName.textContent = data[i].name;
+      gearPrice.textContent = "Price: " + calculatePrice(data[i]) + "g";
+
+      imgCol.appendChild(icon);
+      textCol.append(gearName, gearPrice)
+      buttonContents.append(imgCol, textCol)
+      item.append(buttonContents)
+      col.appendChild(item)
+      row.appendChild(col)
+      container.appendChild(row)
+    }
   }
 }
 
+function renderGearStats(event, gearPiece){
+  $("#stats-image").attr("src", gearPiece.assets.imageMale)
+  $("#stats-name").text(gearPiece.name)
+  $("#defense").text(gearPiece.defense.base)
+  $("#fire-res").text(gearPiece.resistances.fire)
+  $("#water-res").text(gearPiece.resistances.water)
+  $("#thunder-res").text(gearPiece.resistances.thunder)
+  $("#ice-res").text(gearPiece.resistances.ice)
+  $("#dragon-res").text(gearPiece.resistances.dragon)
+  $("#stats-price").text(calculatePrice(gearPiece) + "g")
 
-
-
-/* // currency exchange
-$.ajax({
-  method: "GET",
-  url: "https://pro.exchangerate-api.com/v6/104a51bc3a4c28af0ed4662b/pair/EUR/GBP/100",
-  success: function (data) {
-    console.log(data)
+  //clear slots
+    $(`#gear-slot1`).text("0")
+    $(`#gear-slot2`).text("0")
+    $(`#gear-slot3`).text("0")
+  //set slots
+  for(let i = 0; i < gearPiece.slots.length; i++){
+    $(`#gear-slot${i + 1}`).text(gearPiece.slots[i].rank)
   }
-});
 
-//3c0071a1e8ba45adaf2ba951240a0f81
-$.ajax({
-  method: "GET",
-  url: "https://openexchangerates.org/api/latest.json?app_id=3c0071a1e8ba45adaf2ba951240a0f81&symbols=GBR",
-  success: function (data) {
-    console.log(data)
+  //clear skills
+  $("#skills-list").empty();
+  //set skills
+  for(let i = 0; i < gearPiece.skills.length; i++){
+    let skillRow = document.createElement('div')
+    let skillName = document.createElement('span')
+    let skillLevel = document.createElement('span')
+
+    skillName.classList.add('defense-stats')
+    skillLevel.classList.add('defense-stats')
+
+    skillRow.classList.add('skills-list')
+    skillName.textContent = gearPiece.skills[i].skillName
+    skillLevel.textContent = " Lv. " + gearPiece.skills[i].level;
+
+    skillRow.append(skillName, skillLevel);
+    $("#skills-list").append(skillRow)
   }
-});
-*/
+}
+
+function calculatePrice(data) {
+  let itemPrice = 0;
+  for(let i = 0; i < data.crafting.materials.length; i++){
+    itemPrice += data.crafting.materials[i].item.value;
+  }
+  return Math.round(itemPrice * exchangeRate / 500) * 10
+}

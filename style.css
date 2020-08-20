@@ -1,3 +1,7 @@
+*{
+  font-family: 'Do Hyeon', sans-serif;
+}
+
 body {
   background-image: url("assets/background.png");
   background-repeat: no-repeat;
@@ -18,8 +22,11 @@ body::before {
 .app-title {
   text-align: center;
   margin-top: 35%;
-  color: white;
-  font-size: 38px;
+  color: mintcream;
+  font-size: 40px;
+  font-family: 'Do Hyeon', sans-serif;
+  text-shadow: 6px 6px 5px black, 6px 6px 5px black;
+
 }
 
 .button-row{
@@ -27,17 +34,9 @@ body::before {
 }
 
 .landing-button {
-  background-color: brown;
+  background-color: saddlebrown;
   color: white;
   padding: 1rem 0;
-  margin-bottom: 7%;
-  border: 4px solid black;
-}
-
-.shop-button {
-  background-color: brown;
-  color: white;
-  height: 20%;
   margin-bottom: 7%;
   border: 4px solid black;
 }
@@ -53,10 +52,14 @@ body::before {
 .gear-button {
   background-color: brown;
   color: white;
-  height: 5rem;
+  height: 12vh;
   margin-bottom: 5%;
   border: 4px solid black;
   padding: 0 2%;
+}
+
+.gear-button > * {
+  pointer-events: none;
 }
 
 .categories {
@@ -79,5 +82,61 @@ body::before {
 }
 
 .gear-list {
-  margin-top: 20%;
+  margin-top: 25%;
+}
+
+.nav-style {
+  background-color: black;
+}
+
+.home-button {
+  color: lightgrey;
+}
+
+
+/* MODAL STUFF */
+.modal-content{
+  background-color: #8A9688;
+  width: 95%;
+  border: 2px solid white;
+}
+
+.stats-header {
+  padding-top: 5%;
+}
+
+.stats-header > .gear-text {
+  padding-top: 7%;
+}
+
+.defense-stats {
+  font-size: 2.2vh;
+}
+
+.modal-body > .row {
+  margin-bottom: 5%;
+}
+
+.slots-skills {
+  font-size: 3vh;
+}
+
+.button-container {
+  text-align: center;
+  width: 100%;
+}
+
+.purchase-button {
+  width: 95%;
+  height: 7vh;
+  margin-bottom: 5%;
+  background-color: #228B22;
+  border: 2px solid black;
+}
+
+.close-button {
+  width: 50%;
+  height: 6vh;
+  justify-self: center;
+  border: 2px solid black;
 }
