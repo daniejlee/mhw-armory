@@ -1,9 +1,12 @@
 const container = document.querySelector('.container')
 const navbar = document.querySelector('.navbar')
 let armorType = null;
+let selectedGear = null;
 let exchangeRate = 1;
 let currentPage = 'homePage'
 const home = navbar.querySelector('.home-button')
+
+let inventory = new Inventory();
 
 $.ajax({
   method: "GET",
@@ -52,6 +55,8 @@ function renderData(data){
     case 'itemsList':
       renderItemsList(data)
       break;
+    case 'inventory':
+      inventory.renderInventory(container, navbar)
   }
 }
 
@@ -90,8 +95,8 @@ function renderHomePage() {
     renderData();
   })
   inventoryButton.addEventListener('click', function(){
-    //todo
-    console.log("to do")
+    currentPage = 'inventory'
+    renderData();
   })
 }
 
@@ -131,9 +136,7 @@ function renderShopCategories() {
   col.addEventListener('click', function(){
     currentPage = 'itemsList'
     getData(event)
-
   })
-
 }
 
 function renderItemsList(data) {
@@ -146,6 +149,7 @@ function renderItemsList(data) {
     //SHOW GEAR STATS MODAL
     col.addEventListener('click', function () {
       $("#gearStats").modal('show')
+     // $("#confirm-purchase").off();
       renderGearStats(event, data[event.target.id]);
     })
 
@@ -183,6 +187,7 @@ function renderItemsList(data) {
 }
 
 function renderGearStats(event, gearPiece){
+  let confirmPurchase = document.getElementById('confirm-purchase')
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
   $("#stats-name").text(gearPiece.name)
   $("#defense").text(gearPiece.defense.base)
@@ -204,6 +209,7 @@ function renderGearStats(event, gearPiece){
 
   //clear skills
   $("#skills-list").empty();
+  $("#skills-list").text("Skills")
   //set skills
   for(let i = 0; i < gearPiece.skills.length; i++){
     let skillRow = document.createElement('div')
@@ -220,6 +226,20 @@ function renderGearStats(event, gearPiece){
     skillRow.append(skillName, skillLevel);
     $("#skills-list").append(skillRow)
   }
+
+  selectedGear = document.getElementById(event.target.id)
+  confirmPurchase.removeEventListener('click', purchaseGear)
+  confirmPurchase.addEventListener('click', purchaseGear)
+}
+
+function purchaseGear(){
+  let clonedGear = selectedGear.cloneNode(true);
+  inventory.addGearPiece(clonedGear)
+  $("#thank-you").modal('show')
+  setTimeout(function(){
+    $("#thank-you").modal('hide')
+  }, 1000)
+
 }
 
 function calculatePrice(data) {
