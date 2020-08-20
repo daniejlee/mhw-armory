@@ -1,8 +1,17 @@
 const container = document.querySelector('.container')
 const navbar = document.querySelector('.navbar')
 let armorType = null;
+let exchangeRate = 1;
 let currentPage = 'homePage'
 const home = navbar.querySelector('.home-button')
+
+$.ajax({
+  method: "GET",
+  url: "https://openexchangerates.org/api/latest.json?app_id=3c0071a1e8ba45adaf2ba951240a0f81&symbols=JPY",
+  success: function (data) {
+    exchangeRate = data.rates.JPY;
+  }
+});
 
 home.addEventListener('click', function(){
   currentPage = 'homePage'
@@ -83,7 +92,6 @@ function renderHomePage() {
   inventoryButton.addEventListener('click', function(){
     //todo
     console.log("to do")
-    $("#gearStats").modal('show')
   })
 }
 
@@ -130,7 +138,6 @@ function renderShopCategories() {
 
 function renderItemsList(data) {
 //ADD SEARCH FEATURE
-  console.log(data)
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
@@ -162,7 +169,7 @@ function renderItemsList(data) {
       icon.src = data[i].assets.imageMale;
       icon.width = "67"
       gearName.textContent = data[i].name;
-      gearPrice.textContent = "Price: " + calculatePrice(data[i]);
+      gearPrice.textContent = "Price: " + calculatePrice(data[i]) + "g";
 
       imgCol.appendChild(icon);
       textCol.append(gearName, gearPrice)
@@ -175,10 +182,7 @@ function renderItemsList(data) {
   }
 }
 
-
-
 function renderGearStats(event, gearPiece){
-  console.log(gearPiece)
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
   $("#stats-name").text(gearPiece.name)
   $("#defense").text(gearPiece.defense.base)
@@ -187,6 +191,7 @@ function renderGearStats(event, gearPiece){
   $("#thunder-res").text(gearPiece.resistances.thunder)
   $("#ice-res").text(gearPiece.resistances.ice)
   $("#dragon-res").text(gearPiece.resistances.dragon)
+  $("#stats-price").text(calculatePrice(gearPiece) + "g")
 
   //clear slots
     $(`#gear-slot1`).text("0")
@@ -222,24 +227,5 @@ function calculatePrice(data) {
   for(let i = 0; i < data.crafting.materials.length; i++){
     itemPrice += data.crafting.materials[i].item.value;
   }
-  return itemPrice
+  return Math.round(itemPrice * exchangeRate / 500) * 10
 }
-
-/* // currency exchange
-$.ajax({
-  method: "GET",
-  url: "https://pro.exchangerate-api.com/v6/104a51bc3a4c28af0ed4662b/pair/EUR/GBP/100",
-  success: function (data) {
-    console.log(data)
-  }
-});
-
-//3c0071a1e8ba45adaf2ba951240a0f81
-$.ajax({
-  method: "GET",
-  url: "https://openexchangerates.org/api/latest.json?app_id=3c0071a1e8ba45adaf2ba951240a0f81&symbols=GBR",
-  success: function (data) {
-    console.log(data)
-  }
-});
-*/
