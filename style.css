@@ -71,6 +71,10 @@ body::before {
   padding-left: 5%;
 }
 
+.gear-list-image, #stats-image{
+  filter: drop-shadow(5px 5px 6px black)
+}
+
 .gear-text {
   font-size: 1rem;
   line-height: .8;
@@ -141,7 +145,7 @@ body::before {
   border: 2px solid black;
 }
 
-.thank-you-modal{
+.thank-you-modal {
   background-color: mintcream;
   opacity: 0.7;
   width: 70%;
@@ -152,4 +156,12 @@ body::before {
 .thank-you-text {
   padding: 0;
   margin: 0;
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -1rem;
+  margin-left: -1rem;
 }
