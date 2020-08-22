@@ -5,16 +5,23 @@ let selectedGear = null;
 let exchangeRate = 1;
 let currentPage = 'homePage'
 const home = navbar.querySelector('.home-button')
-
 let inventory = new Inventory();
 
-$.ajax({
-  method: "GET",
-  url: "https://openexchangerates.org/api/latest.json?app_id=3c0071a1e8ba45adaf2ba951240a0f81&symbols=JPY",
-  success: function (data) {
-    exchangeRate = data.rates.JPY;
-  }
-});
+window.addEventListener('DOMContentLoaded', function(){
+
+  let appId = '3c0071a1e8ba45adaf2ba951240a0f81';
+  renderData();
+  $(".loader").hide();
+  $.ajax({
+    method: "GET",
+    url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=JPY`,
+    success: function (data) {
+      exchangeRate = data.rates.JPY;
+    }
+  });
+})
+
+
 
 home.addEventListener('click', function(){
   currentPage = 'homePage'
@@ -26,11 +33,15 @@ home.addEventListener('click', function(){
 //const backButton = document.createElement('button')
 
 function getData(event){
+  $(".loader").show();
   armorType = event.target.id;
   $.ajax({
     method: "GET",
     url: `https://mhw-db.com/armor?q={"type":"${armorType}"}`,
-    success: renderData,
+    success: function (data){
+      $(".loader").hide();
+      renderData(data)
+    },
     error: function (){
       console.log("error");
     }
@@ -81,7 +92,7 @@ function renderHomePage() {
   browseButton.id = 'browse-shop'
 
   inventoryButton.classList.add('btn', 'landing-button', 'btn-lg', 'btn-block')
-  inventoryButton.textContent = "View Inventory"
+  inventoryButton.textContent = "View Backpack"
   inventoryButton.id = 'view-inventory'
 
   titleRow.append(title)
@@ -141,6 +152,7 @@ function renderShopCategories() {
 
 function renderItemsList(data) {
 //ADD SEARCH FEATURE
+console.log(data)
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
@@ -150,11 +162,11 @@ function renderItemsList(data) {
     col.addEventListener('click', function () {
       $("#gearStats").modal('show')
      // $("#confirm-purchase").off();
-      renderGearStats(event, data[event.target.id]);
+      showGearStats(event, data[event.target.id]);
     })
 
   for (let i = 0; i < data.length; i++) {
-    if(data[i].assets){
+    if (data[i].assets && (data[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
       const item = document.createElement('button')
       const buttonContents = document.createElement('div');
       const icon = document.createElement('img')
@@ -171,6 +183,7 @@ function renderItemsList(data) {
 
       item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
       icon.src = data[i].assets.imageMale;
+      icon.classList.add('gear-list-image')
       icon.width = "67"
       gearName.textContent = data[i].name;
       gearPrice.textContent = "Price: " + calculatePrice(data[i]) + "g";
@@ -186,7 +199,7 @@ function renderItemsList(data) {
   }
 }
 
-function renderGearStats(event, gearPiece){
+function showGearStats(event, gearPiece){
   let confirmPurchase = document.getElementById('confirm-purchase')
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
   $("#stats-name").text(gearPiece.name)
