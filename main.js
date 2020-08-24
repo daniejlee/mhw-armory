@@ -8,10 +8,9 @@ const home = navbar.querySelector('.home-button')
 let inventory = new Inventory();
 
 window.addEventListener('DOMContentLoaded', function(){
-
-  let appId = '3c0071a1e8ba45adaf2ba951240a0f81';
   renderData();
   $(".loader").hide();
+  $(".disable-ui").hide();
   $.ajax({
     method: "GET",
     url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=JPY`,
@@ -20,8 +19,6 @@ window.addEventListener('DOMContentLoaded', function(){
     }
   });
 })
-
-
 
 home.addEventListener('click', function(){
   currentPage = 'homePage'
@@ -34,16 +31,19 @@ home.addEventListener('click', function(){
 
 function getData(event){
   $(".loader").show();
+  $(".disable-ui").show();
+
   armorType = event.target.id;
   $.ajax({
     method: "GET",
     url: `https://mhw-db.com/armor?q={"type":"${armorType}"}`,
     success: function (data){
       $(".loader").hide();
+      $(".disable-ui").hide();
       renderData(data)
     },
-    error: function (){
-      console.log("error");
+    error: function (error){
+      console.error(error.responseJSON.error.message)
     }
   });
 }
@@ -69,6 +69,11 @@ function renderData(data){
     case 'inventory':
       inventory.renderInventory(container, navbar)
   }
+  console.log('hello')
+}
+
+function renderPage(page){
+
 }
 
 function renderHomePage() {
@@ -114,8 +119,8 @@ function renderHomePage() {
 
 function renderShopCategories() {
   navbar.classList.remove('d-none')
-  let row = document.createElement('div')
-  let col = document.createElement('div')
+  const row = document.createElement('div')
+  const col = document.createElement('div')
   const helmsButton = document.createElement('button')
   const chestsButton = document.createElement('button')
   const armsButton = document.createElement('button')
@@ -136,11 +141,11 @@ function renderShopCategories() {
   row.classList.add('row', 'justify-content-center', 'categories')
   col.classList.add('col-11', 'contents-column')
 
-  col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
-  let allButtons = col.querySelectorAll('button')
+  const allButtons = [helmsButton, chestsButton, armsButton, waistButton, legsButton]
   for(let i = 0; i < allButtons.length; i++){
     allButtons[i].classList.add('btn', 'shop-button', 'btn-lg', 'btn-block')
   }
+  col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
   row.appendChild(col)
   container.appendChild(row)
 

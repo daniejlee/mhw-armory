@@ -2,8 +2,23 @@
   font-family: 'Do Hyeon', sans-serif;
 }
 
+@media only screen and (min-width: 375px) {
+  body {
+    /* The file size of this background image is 93% smaller
+       to improve page load speed on mobile internet connections */
+    background-image: url("assets/background.png");
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body {
+    /* The file size of this background image is 93% smaller
+       to improve page load speed on mobile internet connections */
+    background-image: url("assets/background-large.jpg");
+  }
+}
+
 body {
-  background-image: url("assets/background.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -21,16 +36,15 @@ body::before {
 
 .app-title {
   text-align: center;
-  margin-top: 35%;
+  margin-top: 15vh;
   color: mintcream;
   font-size: 40px;
   font-family: 'Do Hyeon', sans-serif;
   text-shadow: 6px 6px 5px black, 6px 6px 5px black;
-
 }
 
 .button-row{
-  margin-top: 70%;
+  margin-top: 22vh;
 }
 
 .landing-button {
@@ -96,7 +110,6 @@ body::before {
 .home-button {
   color: lightgrey;
 }
-
 
 /* MODAL STUFF */
 .modal-content{
@@ -164,4 +177,13 @@ body::before {
   left: 50%;
   margin-top: -1rem;
   margin-left: -1rem;
+}
+
+.disable-ui{
+  content: "";
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
