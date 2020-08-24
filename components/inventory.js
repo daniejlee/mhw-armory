@@ -5,7 +5,7 @@ class Inventory {
   addGearPiece(gear){
     this.inventory.push(gear)
   }
-  renderInventory(containerElement, navElement){
+  renderInventory(navElement){
     navElement.classList.remove('d-none')
     let row = document.createElement('div')
     let col = document.createElement('div')
@@ -17,7 +17,6 @@ class Inventory {
       emptyText.textContent = "Backpack is empty"
       col.appendChild(emptyText)
       row.appendChild(col)
-      containerElement.appendChild(row)
       return row
     }
     else{
@@ -25,7 +24,6 @@ class Inventory {
         col.appendChild(this.inventory[i])
       }
       row.appendChild(col);
-      containerElement.appendChild(row)
       return row;
     }
   }
