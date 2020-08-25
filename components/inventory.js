@@ -1,13 +1,8 @@
 class Inventory {
   constructor(){
-    // this.inventory = [];
-    // this.gearStats = [];
     this.inventory = [];
   }
   addGearPiece(gearNode, gearStats){
-    // this.inventory.push(gearNode)
-    // this.gearStats.push(gearStats)
-
     let gear = {
       node: gearNode,
       stats: gearStats
@@ -30,18 +25,7 @@ class Inventory {
       row.appendChild(col)
       return row;
     }
-    // else{
-    //   for(let i = 0; i < this.inventory.length; i++){
-    //     this.inventory[i].id = i;
-    //     col.appendChild(this.inventory[i])
-    //   }
-    // col.addEventListener('click', function(){
-    //   $("#gearStats").modal('show')
-    //   $("#confirm-purchase").addClass('d-none')
-    //   showGearStats(event, inventory.gearStats[event.target.id]);
-    // })
 
-    //test
     else{
       for(let i = 0; i < this.inventory.length; i++){
         this.inventory[i].node.addEventListener('click', function(){
@@ -51,7 +35,7 @@ class Inventory {
         })
         col.appendChild(this.inventory[i].node)
       }
-    //test
+
       row.appendChild(col);
       return row;
     }
