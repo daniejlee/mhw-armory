@@ -15,7 +15,7 @@ body::before {
   right: 0px;
   bottom: 0px;
   left: 0px;
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255,255,255,0.08);
 }
 
 .app-title {
@@ -230,7 +230,7 @@ body::before {
   }
   /* Gear Stats Modal */
   .modal-content{
-    width: 100%;
+    width: 85%;
   }
   .stats-header {
     padding-top: 0;
@@ -256,6 +256,7 @@ body::before {
 @media only screen and (min-width: 768px) {
   body {
     background-image: url("assets/background-large.jpg");
+    background-position: center;
   }
   .app-title {
     margin-top: 15vh;
@@ -272,6 +273,32 @@ body::before {
 
 @media only screen and (min-width: 1024px) {
   body {
-    background-image: url("assets/background-large.jpg");
+    background-image: url("assets/background3.png");
+  }
+}
+
+
+@media (min-width: 1050px) {
+  body{
+    background-image: none;
+    background-color: black;
+  }
+  .container{
+    background-image: url("assets/background3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .app-title {
+    margin-top: 10vh;
+    font-size: 60px;
+  }
+  .landing-button {
+    width: 60%;
+    font-size: 1.75rem;
+    padding: 1.3vh 0;
+  }
+  .button-row{
+    margin-top: 12vh;
+    margin-bottom: 12vh;
   }
 }

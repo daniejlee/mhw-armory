@@ -6,9 +6,11 @@ let selectedGearStats = null;
 let exchangeRate = 1;
 let previousPage = 'homePage'
 let nextPage = 'homePage'
-const home = navbar.querySelector('.home-button')
+let confirmPurchase = document.getElementById('confirm-purchase')
 const back = navbar.querySelector('.back-button')
 let inventory = new Inventory();
+
+confirmPurchase.addEventListener('click', purchaseGear)
 
 window.addEventListener('DOMContentLoaded', function(){
   createPage();
@@ -34,9 +36,6 @@ back.addEventListener('click', function(){
   navbar.classList.add('d-none')
   createPage();
 })
-//let previousPage = '';
-//back button
-//const backButton = document.createElement('button')
 
 function getData(event){
   $(".loader").show();
@@ -258,12 +257,7 @@ function showGearStats(event, gearPiece){
 
   selectedGear = document.getElementById(event.target.id)
   selectedGearStats = gearPiece
-  // confirmPurchase.removeEventListener('click', purchaseGear)
-  // confirmPurchase.addEventListener('click', purchaseGear)
 }
-
-let confirmPurchase = document.getElementById('confirm-purchase')
-confirmPurchase.addEventListener('click', purchaseGear)
 
 function purchaseGear(){
   let clonedGear = selectedGear.cloneNode(true);
