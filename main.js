@@ -2,16 +2,20 @@ const container = document.querySelector('.container')
 const navbar = document.querySelector('.navbar')
 let armorType = null;
 let selectedGear = null;
+let selectedGearStats = null;
 let exchangeRate = 1;
-let currentPage = 'homePage'
-const home = navbar.querySelector('.home-button')
+let previousPage = 'homePage'
+let nextPage = 'homePage'
+let confirmPurchase = document.getElementById('confirm-purchase')
+const back = navbar.querySelector('.back-button')
 let inventory = new Inventory();
 
-window.addEventListener('DOMContentLoaded', function(){
+confirmPurchase.addEventListener('click', purchaseGear)
 
-  let appId = '3c0071a1e8ba45adaf2ba951240a0f81';
-  renderData();
+window.addEventListener('DOMContentLoaded', function(){
+  createPage();
   $(".loader").hide();
+  $(".disable-buttons").hide();
   $.ajax({
     method: "GET",
     url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=JPY`,
@@ -21,29 +25,33 @@ window.addEventListener('DOMContentLoaded', function(){
   });
 })
 
-
-
-home.addEventListener('click', function(){
-  currentPage = 'homePage'
+back.addEventListener('click', function(){
+  if(nextPage === 'shopCategories' || nextPage === 'inventory'){
+    previousPage = 'homePage';
+  }
+  else if(nextPage === 'itemsList'){
+    previousPage = 'shopCategories'
+  }
+  nextPage = previousPage;
   navbar.classList.add('d-none')
-  renderData();
+  createPage();
 })
-//let previousPage = '';
-//back button
-//const backButton = document.createElement('button')
 
 function getData(event){
   $(".loader").show();
+  $(".disable-buttons").show();
   armorType = event.target.id;
   $.ajax({
     method: "GET",
     url: `https://mhw-db.com/armor?q={"type":"${armorType}"}`,
     success: function (data){
       $(".loader").hide();
-      renderData(data)
+      $(".disable-buttons").hide();
+      createPage(data)
     },
-    error: function (){
-      console.log("error");
+    error: function (error){
+      console.log(error)
+      console.error(error.responseJSON.error.message)
     }
   });
 }
@@ -54,21 +62,27 @@ function removeData(){
   }
 }
 
-function renderData(data){
+function createPage(gear){
+  let pageData = null;
   removeData();
-  switch(currentPage) {
+  switch(nextPage) {
     case 'homePage':
-      renderHomePage()
+      pageData = renderHomePage()
       break;
     case 'shopCategories':
-      renderShopCategories()
+      pageData = renderShopCategories()
       break;
     case 'itemsList':
-      renderItemsList(data)
+      pageData = renderItemsList(gear)
       break;
     case 'inventory':
-      inventory.renderInventory(container, navbar)
+      pageData = inventory.renderInventory(navbar)
   }
+  renderPage(pageData);
+}
+
+function renderPage(page){
+  container.appendChild(page)
 }
 
 function renderHomePage() {
@@ -100,22 +114,24 @@ function renderHomePage() {
 
   contentCol.append(titleRow, buttonRow)
   contents.append(contentCol)
-  container.appendChild(contents)
   browseButton.addEventListener('click', function(){
-    currentPage = 'shopCategories';
-    renderData();
+    previousPage = 'homePage';
+    nextPage = 'shopCategories';
+    createPage();
   })
   inventoryButton.addEventListener('click', function(){
-    currentPage = 'inventory'
-    renderData();
+    //previousPage = 'homePage';
+    nextPage = 'inventory'
+    createPage();
   })
+  return contents
 }
 
 
 function renderShopCategories() {
   navbar.classList.remove('d-none')
-  let row = document.createElement('div')
-  let col = document.createElement('div')
+  const row = document.createElement('div')
+  const col = document.createElement('div')
   const helmsButton = document.createElement('button')
   const chestsButton = document.createElement('button')
   const armsButton = document.createElement('button')
@@ -134,39 +150,38 @@ function renderShopCategories() {
   legsButton.id = "legs";
 
   row.classList.add('row', 'justify-content-center', 'categories')
-  col.classList.add('col-11', 'contents-column')
+  col.classList.add('col-11', 'categories-column')
 
-  col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
-  let allButtons = col.querySelectorAll('button')
+  const allButtons = [helmsButton, chestsButton, armsButton, waistButton, legsButton]
   for(let i = 0; i < allButtons.length; i++){
     allButtons[i].classList.add('btn', 'shop-button', 'btn-lg', 'btn-block')
   }
+  col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
   row.appendChild(col)
-  container.appendChild(row)
-
   col.addEventListener('click', function(){
-    currentPage = 'itemsList'
+    //previousPage = nextPage;
+    nextPage = 'itemsList'
     getData(event)
   })
+  return row
 }
 
-function renderItemsList(data) {
+function renderItemsList(gearData) {
 //ADD SEARCH FEATURE
-console.log(data)
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
-    col.classList.add('col-11', 'contents-column')
+    col.classList.add('col-11', 'categories-column')
 
     //SHOW GEAR STATS MODAL
     col.addEventListener('click', function () {
       $("#gearStats").modal('show')
-     // $("#confirm-purchase").off();
-      showGearStats(event, data[event.target.id]);
+      $("#confirm-purchase").removeClass('d-none')
+      showGearStats(event, gearData[event.target.id]);
     })
 
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].assets && (data[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
+  for (let i = 0; i < gearData.length; i++) {
+    if (gearData[i].assets && (gearData[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
       const item = document.createElement('button')
       const buttonContents = document.createElement('div');
       const icon = document.createElement('img')
@@ -182,25 +197,25 @@ console.log(data)
       textCol.classList.add('col', 'gear-text')
 
       item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
-      icon.src = data[i].assets.imageMale;
+      icon.src = gearData[i].assets.imageMale;
       icon.classList.add('gear-list-image')
       icon.width = "67"
-      gearName.textContent = data[i].name;
-      gearPrice.textContent = "Price: " + calculatePrice(data[i]) + "g";
+      gearName.textContent = gearData[i].name;
+      gearPrice.textContent = "Price: " + calculatePrice(gearData[i]) + "g";
 
       imgCol.appendChild(icon);
       textCol.append(gearName, gearPrice)
       buttonContents.append(imgCol, textCol)
-      item.append(buttonContents)
+      item.appendChild(buttonContents)
       col.appendChild(item)
-      row.appendChild(col)
-      container.appendChild(row)
     }
   }
+  row.appendChild(col)
+  return row;
 }
 
 function showGearStats(event, gearPiece){
-  let confirmPurchase = document.getElementById('confirm-purchase')
+  //let confirmPurchase = document.getElementById('confirm-purchase')
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
   $("#stats-name").text(gearPiece.name)
   $("#defense").text(gearPiece.defense.base)
@@ -241,18 +256,16 @@ function showGearStats(event, gearPiece){
   }
 
   selectedGear = document.getElementById(event.target.id)
-  confirmPurchase.removeEventListener('click', purchaseGear)
-  confirmPurchase.addEventListener('click', purchaseGear)
+  selectedGearStats = gearPiece
 }
 
 function purchaseGear(){
   let clonedGear = selectedGear.cloneNode(true);
-  inventory.addGearPiece(clonedGear)
+  inventory.addGearPiece(clonedGear, selectedGearStats)
   $("#thank-you").modal('show')
   setTimeout(function(){
     $("#thank-you").modal('hide')
   }, 1000)
-
 }
 
 function calculatePrice(data) {
