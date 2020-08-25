@@ -2,22 +2,6 @@
   font-family: 'Do Hyeon', sans-serif;
 }
 
-@media only screen and (min-width: 375px) {
-  body {
-    /* The file size of this background image is 93% smaller
-       to improve page load speed on mobile internet connections */
-    background-image: url("assets/background.png");
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  body {
-    /* The file size of this background image is 93% smaller
-       to improve page load speed on mobile internet connections */
-    background-image: url("assets/background-large.jpg");
-  }
-}
-
 body {
   background-repeat: no-repeat;
   background-size: cover;
@@ -31,7 +15,7 @@ body::before {
   right: 0px;
   bottom: 0px;
   left: 0px;
-  background-color: rgba(255,255,255,0.15);
+  background-color: rgba(255,255,255,0.1);
 }
 
 .app-title {
@@ -44,14 +28,15 @@ body::before {
 }
 
 .button-row{
-  margin-top: 22vh;
+  margin-top: 20vh;
+  margin-bottom: 10vh;
 }
 
 .landing-button {
   background-color: saddlebrown;
   color: white;
-  padding: 1rem 0;
-  margin-bottom: 7%;
+  padding: 2.8vh 0;
+  margin-bottom: 3vh;
   border: 4px solid black;
 }
 
@@ -77,7 +62,7 @@ body::before {
 }
 
 .categories {
-  margin-top: 30%;
+  margin-top: 17vh;
 }
 
 .img-container{
@@ -107,8 +92,27 @@ body::before {
   background-color: black;
 }
 
-.home-button {
+/* .home-button {
   color: lightgrey;
+} */
+
+.back-button {
+  color: lightgrey;
+  font-size: 1.1rem;
+}
+
+.back-text{
+  margin-left: .2rem;
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight: 300;
+  color: lightgrey;
+}
+
+.empty-backpack-text {
+  margin-top: 15vh;
+  font-size: 1.8rem;
+  color: mintcream;
+  text-shadow: 5px 5px 4px black;
 }
 
 /* MODAL STUFF */
@@ -179,11 +183,54 @@ body::before {
   margin-left: -1rem;
 }
 
-.disable-ui{
+.disable-buttons{
   content: "";
   position: fixed;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
+}
+
+
+/* Media Queries */
+@media only screen and (min-width: 200px) {
+  body {
+    background-image: url("assets/background.png");
+  }
+}
+
+
+@media only screen and (min-width: 667px) {
+  body {
+    background-image: url("assets/background-large.jpg");
+  }
+  .button-row{
+  margin-top: 10vh;
+  margin-bottom: 0;
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+  body {
+    background-image: url("assets/background-large.jpg");
+  }
+  .app-title {
+    margin-top: 15vh;
+    font-size: 60px;
+  }
+  .button-row{
+  margin-top: 20vh;
+  }
+  .landing-button {
+  width: 70%;
+  font-size: 1.75rem;
+}
+}
+
+@media only screen and (min-width: 1024px) {
+  body {
+    background-image: url("assets/background-large.jpg");
+  }
 }

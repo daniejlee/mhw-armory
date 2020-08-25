@@ -3,14 +3,16 @@ const navbar = document.querySelector('.navbar')
 let armorType = null;
 let selectedGear = null;
 let exchangeRate = 1;
-let currentPage = 'homePage'
+let previousPage = 'homePage'
+let nextPage = 'homePage'
 const home = navbar.querySelector('.home-button')
+const back = navbar.querySelector('.back-button')
 let inventory = new Inventory();
 
 window.addEventListener('DOMContentLoaded', function(){
   createPage();
   $(".loader").hide();
-  $(".disable-ui").hide();
+  $(".disable-buttons").hide();
   $.ajax({
     method: "GET",
     url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=JPY`,
@@ -20,8 +22,14 @@ window.addEventListener('DOMContentLoaded', function(){
   });
 })
 
-home.addEventListener('click', function(){
-  currentPage = 'homePage'
+back.addEventListener('click', function(){
+  if(nextPage === 'shopCategories' || nextPage === 'inventory'){
+    previousPage = 'homePage';
+  }
+  else if(nextPage === 'itemsList'){
+    previousPage = 'shopCategories'
+  }
+  nextPage = previousPage;
   navbar.classList.add('d-none')
   createPage();
 })
@@ -31,15 +39,14 @@ home.addEventListener('click', function(){
 
 function getData(event){
   $(".loader").show();
-  $(".disable-ui").show();
-
+  $(".disable-buttons").show();
   armorType = event.target.id;
   $.ajax({
     method: "GET",
     url: `https://mhw-db.com/armor?q={"type":"${armorType}"}`,
     success: function (data){
       $(".loader").hide();
-      $(".disable-ui").hide();
+      $(".disable-buttons").hide();
       createPage(data)
     },
     error: function (error){
@@ -58,7 +65,7 @@ function removeData(){
 function createPage(gear){
   let pageData = null;
   removeData();
-  switch(currentPage) {
+  switch(nextPage) {
     case 'homePage':
       pageData = renderHomePage()
       break;
@@ -108,11 +115,13 @@ function renderHomePage() {
   contentCol.append(titleRow, buttonRow)
   contents.append(contentCol)
   browseButton.addEventListener('click', function(){
-    currentPage = 'shopCategories';
+    previousPage = 'homePage';
+    nextPage = 'shopCategories';
     createPage();
   })
   inventoryButton.addEventListener('click', function(){
-    currentPage = 'inventory'
+    //previousPage = 'homePage';
+    nextPage = 'inventory'
     createPage();
   })
   return contents
@@ -150,7 +159,8 @@ function renderShopCategories() {
   col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
   row.appendChild(col)
   col.addEventListener('click', function(){
-    currentPage = 'itemsList'
+    //previousPage = nextPage;
+    nextPage = 'itemsList'
     getData(event)
   })
   return row
