@@ -2,6 +2,7 @@ const container = document.querySelector('.container')
 const navbar = document.querySelector('.navbar')
 let armorType = null;
 let selectedGear = null;
+let selectedGearStats = null;
 let exchangeRate = 1;
 let previousPage = 'homePage'
 let nextPage = 'homePage'
@@ -150,7 +151,7 @@ function renderShopCategories() {
   legsButton.id = "legs";
 
   row.classList.add('row', 'justify-content-center', 'categories')
-  col.classList.add('col-11', 'contents-column')
+  col.classList.add('col-11', 'categories-column')
 
   const allButtons = [helmsButton, chestsButton, armsButton, waistButton, legsButton]
   for(let i = 0; i < allButtons.length; i++){
@@ -168,15 +169,15 @@ function renderShopCategories() {
 
 function renderItemsList(gearData) {
 //ADD SEARCH FEATURE
-console.log(gearData)
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
-    col.classList.add('col-11', 'contents-column')
+    col.classList.add('col-11', 'categories-column')
 
     //SHOW GEAR STATS MODAL
     col.addEventListener('click', function () {
       $("#gearStats").modal('show')
+      $("#confirm-purchase").removeClass('d-none')
       showGearStats(event, gearData[event.target.id]);
     })
 
@@ -215,7 +216,7 @@ console.log(gearData)
 }
 
 function showGearStats(event, gearPiece){
-  let confirmPurchase = document.getElementById('confirm-purchase')
+  //let confirmPurchase = document.getElementById('confirm-purchase')
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
   $("#stats-name").text(gearPiece.name)
   $("#defense").text(gearPiece.defense.base)
@@ -256,13 +257,17 @@ function showGearStats(event, gearPiece){
   }
 
   selectedGear = document.getElementById(event.target.id)
-  confirmPurchase.removeEventListener('click', purchaseGear)
-  confirmPurchase.addEventListener('click', purchaseGear)
+  selectedGearStats = gearPiece
+  // confirmPurchase.removeEventListener('click', purchaseGear)
+  // confirmPurchase.addEventListener('click', purchaseGear)
 }
+
+let confirmPurchase = document.getElementById('confirm-purchase')
+confirmPurchase.addEventListener('click', purchaseGear)
 
 function purchaseGear(){
   let clonedGear = selectedGear.cloneNode(true);
-  inventory.addGearPiece(clonedGear)
+  inventory.addGearPiece(clonedGear, selectedGearStats)
   $("#thank-you").modal('show')
   setTimeout(function(){
     $("#thank-you").modal('hide')

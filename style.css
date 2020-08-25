@@ -85,20 +85,17 @@ body::before {
 }
 
 .gear-list {
-  margin-top: 25%;
+  margin-top: 13vh;
 }
 
 .nav-style {
   background-color: black;
 }
 
-/* .home-button {
-  color: lightgrey;
-} */
-
 .back-button {
   color: lightgrey;
   font-size: 1.1rem;
+  cursor: pointer;
 }
 
 .back-text{
@@ -106,6 +103,15 @@ body::before {
   font-family: 'Do Hyeon', sans-serif;
   font-weight: 300;
   color: lightgrey;
+}
+
+.currency {
+  color: lightgrey;
+  cursor: pointer;
+}
+
+.currency-count{
+
 }
 
 .empty-backpack-text {
@@ -131,7 +137,7 @@ body::before {
 }
 
 .defense-stats {
-  font-size: 2.2vh;
+  font-size: 1rem;
 }
 
 .modal-body > .row {
@@ -139,7 +145,7 @@ body::before {
 }
 
 .slots-skills {
-  font-size: 3vh;
+  font-size: 1.25rem;
 }
 
 .button-container {
@@ -206,8 +212,43 @@ body::before {
     background-image: url("assets/background-large.jpg");
   }
   .button-row{
-  margin-top: 10vh;
-  margin-bottom: 0;
+    margin-top: 10vh;
+    margin-bottom: 0;
+  }
+  .shop-button {
+    height: 17vh;
+    margin-bottom: 4vh;
+  }
+  .gear-button {
+    height: 20vh;
+    margin-bottom: 3%;
+    padding: 0 2%;
+  }
+  .gear-text{
+    line-height: .5;
+    padding-top: 4%
+  }
+  /* Gear Stats Modal */
+  .modal-content{
+    width: 100%;
+  }
+  .stats-header {
+    padding-top: 0;
+  }
+  .modal-body > .row {
+    margin-bottom: 5%;
+  }
+  .button-container {
+    text-align: center;
+    width: 100%;
+  }
+  .purchase-button {
+    width: 80%;
+    height: 12vh;
+  }
+  .close-button {
+    width: 40%;
+    height: 12vh;
   }
 }
 
