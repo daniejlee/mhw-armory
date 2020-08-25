@@ -4,6 +4,7 @@ let armorType = null;
 let selectedGear = null;
 let selectedGearStats = null;
 let exchangeRate = 1;
+let currencyCount = 0;
 let previousPage = 'homePage'
 let nextPage = 'homePage'
 let confirmPurchase = document.getElementById('confirm-purchase')
@@ -21,6 +22,9 @@ window.addEventListener('DOMContentLoaded', function(){
     url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=JPY`,
     success: function (data) {
       exchangeRate = data.rates.JPY;
+    },
+    error: function(error){
+      console.log(error)
     }
   });
 })
@@ -273,5 +277,5 @@ function calculatePrice(data) {
   for(let i = 0; i < data.crafting.materials.length; i++){
     itemPrice += data.crafting.materials[i].item.value;
   }
-  return Math.round(itemPrice * exchangeRate / 500) * 10
+  return Math.round(itemPrice * exchangeRate / 10) * 10
 }
