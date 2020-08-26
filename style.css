@@ -74,6 +74,10 @@ body::before {
   filter: drop-shadow(5px 5px 6px black)
 }
 
+.gear-list-image {
+  width: 67px;
+}
+
 .gear-text {
   font-size: 1rem;
   line-height: .8;
@@ -90,6 +94,11 @@ body::before {
 
 .nav-style {
   background-color: black;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
 }
 
 .back-button {
@@ -132,12 +141,17 @@ body::before {
   padding-top: 5%;
 }
 
+#stats-image{
+  width: 100px;
+}
+
 .stats-header > .gear-text {
   padding-top: 7%;
 }
 
 .defense-stats {
   font-size: 1rem;
+  padding-right: 0;
 }
 
 .modal-body > .row {
@@ -190,24 +204,24 @@ body::before {
 }
 
 .disable-buttons{
-  content: "";
   position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
 }
 
 
 /* Media Queries */
-@media only screen and (min-width: 200px) {
+@media only screen and (min-width: 200px){
   body {
     background-image: url("assets/background.png");
   }
 }
 
-
-@media only screen and (min-width: 667px) {
+/* landscape iphone */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
   body {
     background-image: url("assets/background-large.jpg");
   }
@@ -250,30 +264,101 @@ body::before {
     width: 40%;
     height: 12vh;
   }
+  .inventory-column{
+    margin-top: 3%;
+  }
 }
 
-
+/* portrait ipad */
 @media only screen and (min-width: 768px) {
   body {
-    background-image: url("assets/background-large.jpg");
+    background-image: url("assets/background3.png");
     background-position: center;
   }
+  .nav-style, .back-text{
+    font-size: 1.25rem;
+  }
   .app-title {
-    margin-top: 15vh;
+    margin-top: 18vh;
     font-size: 60px;
   }
   .button-row{
-  margin-top: 20vh;
+    margin-top: 20vh;
   }
   .landing-button {
-  width: 70%;
-  font-size: 1.75rem;
-}
+    width: 70%;
+    padding: 2vh 0;
+    font-size: 1.75rem;
+  }
+  .gear-list-image {
+    width: 100px;
+  }
+  .gear-text{
+    font-size: 1.2rem;
+    line-height: .8;
+    padding-top: 5%
+  }
+  .modal-content{
+    width: 100%;
+  }
+  #stats-image{
+    width: 125px;
+  }
+  .stats-header {
+    padding-top: 5%;
+  }
+  .stats-header > .gear-text {
+    padding-top: 10%;
+    font-size: 2rem;
+  }
+  .defense-stats {
+    margin-top: 5%;
+    font-size: 1.25rem;
+  }
+  .slots-skills {
+    font-size: 1.5rem;
+  }
+  .modal-body > .row {
+    margin-bottom: 7%;
+  }
+  .button-container {
+    text-align: center;
+    width: 100%;
+  }
+  .purchase-button {
+    width: 80%;
+    height: 6vh;
+  }
+  .purchase-button > .row {
+    font-size: 1.25rem;
+  }
+
+  .close-button {
+    font-size: 1.25rem;
+    height: 6vh;
+  }
 }
 
+/* landscape ipad */
 @media only screen and (min-width: 1024px) {
   body {
     background-image: url("assets/background3.png");
+  }
+  .nav-style, .back-text{
+    font-size: 1.25rem;
+  }
+  .shop-button {
+    height: 15vh;
+    margin-bottom: 3vh;
+  }
+  .gear-button {
+    height: 15vh;
+    width: 90%;
+    margin-bottom: 3%;
+    padding: 0 2%;
+  }
+  .gear-text{
+    padding-top: 4%;
   }
 }
 
@@ -283,10 +368,14 @@ body::before {
     background-image: none;
     background-color: black;
   }
-  .container{
+  .background{
     background-image: url("assets/background3.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
+  }
+  .categories{
+    margin-top: 4%;
+    padding-top: 8%;
   }
   .app-title {
     margin-top: 10vh;
@@ -300,5 +389,23 @@ body::before {
   .button-row{
     margin-top: 12vh;
     margin-bottom: 12vh;
+  }
+  .shop-button{
+    height: 10vh;
+    margin-bottom: 2vh;
+  }
+  .gear-list{
+    background-repeat: repeat;
+    margin-top: 4%;
+    padding-top: 8%;
+  }
+  .gear-button {
+    height: 10vh;
+    width: 90%;
+    margin-bottom: 3%;
+    padding: 0 2%;
+  }
+  .contents-column{
+    padding-bottom: 15vh;
   }
 }

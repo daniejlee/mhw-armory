@@ -4,7 +4,7 @@ let armorType = null;
 let selectedGear = null;
 let selectedGearStats = null;
 let exchangeRate = 1;
-let currencyCount = 0;
+let currencyCount = 1000000;
 let previousPage = 'homePage'
 let nextPage = 'homePage'
 let confirmPurchase = document.getElementById('confirm-purchase')
@@ -17,11 +17,12 @@ window.addEventListener('DOMContentLoaded', function(){
   createPage();
   $(".loader").hide();
   $(".disable-buttons").hide();
+  $(".currency-count").text(currencyCount)
   $.ajax({
     method: "GET",
-    url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=JPY`,
+    url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=USD`,
     success: function (data) {
-      exchangeRate = data.rates.JPY;
+      exchangeRate = data.rates.USD;
     },
     error: function(error){
       console.log(error)
@@ -203,7 +204,6 @@ function renderItemsList(gearData) {
       item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
       icon.src = gearData[i].assets.imageMale;
       icon.classList.add('gear-list-image')
-      icon.width = "67"
       gearName.textContent = gearData[i].name;
       gearPrice.textContent = "Price: " + calculatePrice(gearData[i]) + "g";
 
@@ -266,10 +266,16 @@ function showGearStats(event, gearPiece){
 function purchaseGear(){
   let clonedGear = selectedGear.cloneNode(true);
   inventory.addGearPiece(clonedGear, selectedGearStats)
+  subtractCurrency(calculatePrice(selectedGearStats));
   $("#thank-you").modal('show')
   setTimeout(function(){
     $("#thank-you").modal('hide')
   }, 1000)
+}
+
+function subtractCurrency (amount){
+  currencyCount -= amount
+  $(".currency-count").text(currencyCount)
 }
 
 function calculatePrice(data) {
@@ -277,5 +283,6 @@ function calculatePrice(data) {
   for(let i = 0; i < data.crafting.materials.length; i++){
     itemPrice += data.crafting.materials[i].item.value;
   }
-  return Math.round(itemPrice * exchangeRate / 10) * 10
+  // return Math.round(itemPrice * exchangeRate / 10) * 10
+  return Math.round(itemPrice * exchangeRate)
 }
