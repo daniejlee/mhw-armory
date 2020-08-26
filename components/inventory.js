@@ -8,7 +8,6 @@ class Inventory {
       stats: gearStats
     };
     this.inventory.push(gear)
-
   }
   renderInventory(navElement){
     navElement.classList.remove('d-none')
