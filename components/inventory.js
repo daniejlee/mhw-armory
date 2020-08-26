@@ -14,7 +14,7 @@ class Inventory {
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center', 'text-center')
-    col.classList.add('col-11', 'contents-column')
+    col.classList.add('col-11', 'contents-column', 'inventory-column')
 
     if(this.inventory.length === 0){
       let emptyText = document.createElement('div')

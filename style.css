@@ -264,6 +264,9 @@ body::before {
     width: 40%;
     height: 12vh;
   }
+  .inventory-column{
+    margin-top: 3%;
+  }
 }
 
 /* portrait ipad */
