@@ -119,10 +119,6 @@ body::before {
   cursor: pointer;
 }
 
-.currency-count{
-
-}
-
 .empty-backpack-text {
   margin-top: 15vh;
   font-size: 1.8rem;
@@ -371,41 +367,49 @@ body::before {
   .background{
     background-image: url("assets/background3.png");
     background-repeat: no-repeat;
-    background-size: contain;
-  }
-  .categories{
-    margin-top: 4%;
-    padding-top: 8%;
+    background-size: cover;
   }
   .app-title {
-    margin-top: 10vh;
+    margin-top: 10%;
     font-size: 60px;
   }
   .landing-button {
-    width: 60%;
-    font-size: 1.75rem;
-    padding: 1.3vh 0;
+    width: 51%;
+    font-size: 1.5rem;
+    padding: .7rem 0;
   }
   .button-row{
     margin-top: 12vh;
     margin-bottom: 12vh;
   }
+  .categories{
+    margin-top: 4%;
+    padding-top: 8%;
+  }
+  .categories-column{
+    justify-content: center;
+  }
   .shop-button{
-    height: 10vh;
-    margin-bottom: 2vh;
+    height: 5rem;
+    width: 65%;
+    margin-bottom: 2%;
+    margin-left: auto;
+    margin-right: auto;
   }
   .gear-list{
-    background-repeat: repeat;
     margin-top: 4%;
     padding-top: 8%;
   }
   .gear-button {
-    height: 10vh;
-    width: 90%;
+    height: 6rem;
+    width: 70%;
     margin-bottom: 3%;
     padding: 0 2%;
   }
   .contents-column{
-    padding-bottom: 15vh;
+    padding-bottom: 15%;
+  }
+  .gear-list-image {
+    width: 80px;
   }
 }
