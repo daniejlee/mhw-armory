@@ -125,7 +125,6 @@ function renderHomePage() {
     createPage();
   })
   inventoryButton.addEventListener('click', function(){
-    //previousPage = 'homePage';
     nextPage = 'inventory'
     createPage();
   })
@@ -164,7 +163,6 @@ function renderShopCategories() {
   col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
   row.appendChild(col)
   col.addEventListener('click', function(){
-    //previousPage = nextPage;
     nextPage = 'itemsList'
     getData(event)
   })
@@ -178,7 +176,6 @@ function renderItemsList(gearData) {
     row.classList.add('row', 'gear-list', 'justify-content-center')
     col.classList.add('col-11', 'categories-column')
 
-    //SHOW GEAR STATS MODAL
     col.addEventListener('click', function () {
       $("#gearStats").modal('show')
       $("#confirm-purchase").removeClass('d-none')
@@ -219,7 +216,6 @@ function renderItemsList(gearData) {
 }
 
 function showGearStats(event, gearPiece){
-  //let confirmPurchase = document.getElementById('confirm-purchase')
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
   $("#stats-name").text(gearPiece.name)
   $("#defense").text(gearPiece.defense.base)
@@ -230,19 +226,16 @@ function showGearStats(event, gearPiece){
   $("#dragon-res").text(gearPiece.resistances.dragon)
   $("#stats-price").text(calculatePrice(gearPiece) + "g")
 
-  //clear slots
     $(`#gear-slot1`).text("0")
     $(`#gear-slot2`).text("0")
     $(`#gear-slot3`).text("0")
-  //set slots
+
   for(let i = 0; i < gearPiece.slots.length; i++){
     $(`#gear-slot${i + 1}`).text(gearPiece.slots[i].rank)
   }
 
-  //clear skills
   $("#skills-list").empty();
   $("#skills-list").text("Skills")
-  //set skills
   for(let i = 0; i < gearPiece.skills.length; i++){
     let skillRow = document.createElement('div')
     let skillName = document.createElement('span')
