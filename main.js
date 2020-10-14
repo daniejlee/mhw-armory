@@ -55,7 +55,6 @@ function getData(event){
       createPage(data)
     },
     error: function (error){
-      console.log(error)
       console.error(error.responseJSON.error.message)
     }
   });
@@ -162,7 +161,11 @@ function renderShopCategories() {
   }
   col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
   row.appendChild(col)
+
   col.addEventListener('click', function(){
+    if(!event.target.id){
+      return
+    }
     nextPage = 'itemsList'
     getData(event)
   })
@@ -170,13 +173,15 @@ function renderShopCategories() {
 }
 
 function renderItemsList(gearData) {
-//ADD SEARCH FEATURE
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center')
     col.classList.add('col-11', 'categories-column')
 
     col.addEventListener('click', function () {
+      if (!event.target.id) {
+        return
+      }
       $("#gearStats").modal('show')
       $("#confirm-purchase").removeClass('d-none')
       showGearStats(event, gearData[event.target.id]);
@@ -276,6 +281,5 @@ function calculatePrice(data) {
   for(let i = 0; i < data.crafting.materials.length; i++){
     itemPrice += data.crafting.materials[i].item.value;
   }
-  // return Math.round(itemPrice * exchangeRate / 10) * 10
   return Math.round(itemPrice * exchangeRate)
 }
