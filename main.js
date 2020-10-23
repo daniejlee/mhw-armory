@@ -3,6 +3,7 @@ const navbar = document.querySelector('.navbar')
 let armorType = null;
 let selectedGear = null;
 let selectedGearStats = null;
+//delete
 let exchangeRate = 1;
 let currencyCount = 1000000;
 let previousPage = 'homePage'
@@ -18,6 +19,7 @@ window.addEventListener('DOMContentLoaded', function(){
   $(".loader").hide();
   $(".disable-buttons").hide();
   $(".currency-count").text(currencyCount)
+  //delete
   $.ajax({
     method: "GET",
     url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=USD`,
@@ -281,5 +283,5 @@ function calculatePrice(data) {
   for(let i = 0; i < data.crafting.materials.length; i++){
     itemPrice += data.crafting.materials[i].item.value;
   }
-  return Math.round(itemPrice * exchangeRate)
+  return Math.round(itemPrice)
 }
