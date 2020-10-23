@@ -20,16 +20,16 @@ window.addEventListener('DOMContentLoaded', function(){
   $(".disable-buttons").hide();
   $(".currency-count").text(currencyCount)
   //delete
-  $.ajax({
-    method: "GET",
-    url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=USD`,
-    success: function (data) {
-      exchangeRate = data.rates.USD;
-    },
-    error: function(error){
-      console.log(error)
-    }
-  });
+  // $.ajax({
+  //   method: "GET",
+  //   url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=USD`,
+  //   success: function (data) {
+  //     exchangeRate = data.rates.USD;
+  //   },
+  //   error: function(error){
+  //     console.log(error)
+  //   }
+  // });
 })
 
 back.addEventListener('click', function(){
