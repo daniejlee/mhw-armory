@@ -8,15 +8,7 @@ body {
   background-attachment: fixed;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  background-color: rgba(255,255,255,0.08);
-}
+
 
 .app-title {
   text-align: center;
@@ -52,6 +44,7 @@ body::before {
   background-color: brown;
   color: white;
   height: 12vh;
+  width: 85%;
   margin-bottom: 5%;
   border: 4px solid black;
   padding: 0 2%;
@@ -90,6 +83,8 @@ body::before {
 
 .gear-list {
   margin-top: 13vh;
+
+  cursor: pointer;
 }
 
 .nav-style {
@@ -117,6 +112,10 @@ body::before {
 .currency {
   color: lightgrey;
   cursor: pointer;
+}
+
+.page-name {
+  color: lightgrey;
 }
 
 .empty-backpack-text {

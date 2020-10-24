@@ -3,13 +3,12 @@ const navbar = document.querySelector('.navbar')
 let armorType = null;
 let selectedGear = null;
 let selectedGearStats = null;
-//delete
-let exchangeRate = 1;
-let currencyCount = 1000000;
+let currencyCount = 999999;
 let previousPage = 'homePage'
 let nextPage = 'homePage'
 let confirmPurchase = document.getElementById('confirm-purchase')
 const back = navbar.querySelector('.back-button')
+let purchaseFlag = false;
 let inventory = new Inventory();
 
 confirmPurchase.addEventListener('click', purchaseGear)
@@ -19,17 +18,6 @@ window.addEventListener('DOMContentLoaded', function(){
   $(".loader").hide();
   $(".disable-buttons").hide();
   $(".currency-count").text(currencyCount)
-  //delete
-  // $.ajax({
-  //   method: "GET",
-  //   url: `https://openexchangerates.org/api/latest.json?app_id=${appId}&symbols=USD`,
-  //   success: function (data) {
-  //     exchangeRate = data.rates.USD;
-  //   },
-  //   error: function(error){
-  //     console.log(error)
-  //   }
-  // });
 })
 
 back.addEventListener('click', function(){
@@ -135,6 +123,7 @@ function renderHomePage() {
 
 function renderShopCategories() {
   navbar.classList.remove('d-none')
+  $(".page-name").text('Shop')
   const row = document.createElement('div')
   const col = document.createElement('div')
   const helmsButton = document.createElement('button')
@@ -177,10 +166,9 @@ function renderShopCategories() {
 function renderItemsList(gearData) {
     let row = document.createElement('div')
     let col = document.createElement('div')
-    row.classList.add('row', 'gear-list', 'justify-content-center')
-    col.classList.add('col-11', 'categories-column')
+    row.classList.add('row', 'gear-list', 'justify-content-center', 'categories-column')
 
-    col.addEventListener('click', function () {
+    row.addEventListener('click', function () {
       if (!event.target.id) {
         return
       }
@@ -190,7 +178,7 @@ function renderItemsList(gearData) {
     })
 
   for (let i = 0; i < gearData.length; i++) {
-    if (gearData[i].assets && (gearData[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
+    if (gearData[i].assets && gearData[i].assets.imageMale !== null && (gearData[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
       const item = document.createElement('button')
       const buttonContents = document.createElement('div');
       const icon = document.createElement('img')
@@ -205,8 +193,8 @@ function renderItemsList(gearData) {
       imgCol.classList.add('col-3', 'img-container')
       textCol.classList.add('col', 'gear-text')
 
-      item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
-      icon.src = gearData[i].assets.imageMale;
+      item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block')
+        icon.src = gearData[i].assets.imageMale;
       icon.classList.add('gear-list-image')
       gearName.textContent = gearData[i].name;
       gearPrice.textContent = "Price: " + calculatePrice(gearData[i]) + "g";
@@ -215,12 +203,61 @@ function renderItemsList(gearData) {
       textCol.append(gearName, gearPrice)
       buttonContents.append(imgCol, textCol)
       item.appendChild(buttonContents)
-      col.appendChild(item)
+      row.appendChild(item)
     }
   }
-  row.appendChild(col)
   return row;
 }
+
+//removed col in above
+
+// function renderItemsList(gearData) {
+//     let row = document.createElement('div')
+//     let col = document.createElement('div')
+//     row.classList.add('row', 'gear-list', 'justify-content-center')
+//     col.classList.add('col-11', 'categories-column')
+
+//     col.addEventListener('click', function () {
+//       if (!event.target.id) {
+//         return
+//       }
+//       $("#gearStats").modal('show')
+//       $("#confirm-purchase").removeClass('d-none')
+//       showGearStats(event, gearData[event.target.id]);
+//     })
+
+//   for (let i = 0; i < gearData.length; i++) {
+//     if (gearData[i].assets && (gearData[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
+//       const item = document.createElement('button')
+//       const buttonContents = document.createElement('div');
+//       const icon = document.createElement('img')
+//       const imgCol = document.createElement('div')
+//       const textCol = document.createElement('div')
+//       const gearName = document.createElement('p')
+//       const gearPrice = document.createElement('p')
+
+//       item.id = i;
+
+//       buttonContents.classList.add('row', 'vertical-align');
+//       imgCol.classList.add('col-3', 'img-container')
+//       textCol.classList.add('col', 'gear-text')
+
+//       item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
+//       icon.src = gearData[i].assets.imageMale;
+//       icon.classList.add('gear-list-image')
+//       gearName.textContent = gearData[i].name;
+//       gearPrice.textContent = "Price: " + calculatePrice(gearData[i]) + "g";
+
+//       imgCol.appendChild(icon);
+//       textCol.append(gearName, gearPrice)
+//       buttonContents.append(imgCol, textCol)
+//       item.appendChild(buttonContents)
+//       col.appendChild(item)
+//     }
+//   }
+//   row.appendChild(col)
+//   return row;
+// }
 
 function showGearStats(event, gearPiece){
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
@@ -264,12 +301,17 @@ function showGearStats(event, gearPiece){
 }
 
 function purchaseGear(){
+  if(purchaseFlag){
+    return
+  }
   let clonedGear = selectedGear.cloneNode(true);
   inventory.addGearPiece(clonedGear, selectedGearStats)
   subtractCurrency(calculatePrice(selectedGearStats));
   $("#thank-you").modal('show')
+  purchaseFlag = true;
   setTimeout(function(){
     $("#thank-you").modal('hide')
+    purchaseFlag = false;
   }, 1000)
 }
 

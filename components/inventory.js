@@ -11,6 +11,7 @@ class Inventory {
   }
   renderInventory(navElement){
     navElement.classList.remove('d-none')
+    $(".page-name").text('Backpack')
     let row = document.createElement('div')
     let col = document.createElement('div')
     row.classList.add('row', 'gear-list', 'justify-content-center', 'text-center')
