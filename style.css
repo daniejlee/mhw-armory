@@ -113,6 +113,12 @@ body {
 
 .footer-button {
   margin: 0 35px;
+  cursor: pointer;
+  position: relative;
+}
+
+.inactive-button{
+  filter: brightness(50%);
 }
 
 .back-button {
