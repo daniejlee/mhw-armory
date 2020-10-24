@@ -15,12 +15,17 @@ let purchaseFlag = false;
 let inventory = new Inventory();
 
 confirmPurchase.addEventListener('click', purchaseGear)
+
 shopButton.addEventListener('click', function(){
+  backpackButton.classList.add("inactive-button")
+  shopButton.classList.remove("inactive-button")
   previousPage = 'homePage';
   nextPage = 'shopCategories';
   createPage();
 })
 backpackButton.addEventListener('click', function () {
+  shopButton.classList.add("inactive-button")
+  backpackButton.classList.remove("inactive-button")
   nextPage = 'inventory'
   createPage();
 })
@@ -126,11 +131,15 @@ function renderHomePage() {
   contentCol.append(titleRow, buttonRow)
   contents.append(contentCol)
   browseButton.addEventListener('click', function(){
+    backpackButton.classList.add("inactive-button")
+    shopButton.classList.remove("inactive-button")
     previousPage = 'homePage';
     nextPage = 'shopCategories';
     createPage();
   })
   inventoryButton.addEventListener('click', function(){
+    shopButton.classList.add("inactive-button")
+    backpackButton.classList.remove("inactive-button")
     nextPage = 'inventory'
     createPage();
   })
