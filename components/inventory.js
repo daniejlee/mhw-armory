@@ -9,19 +9,18 @@ class Inventory {
     };
     this.inventory.push(gear)
   }
-  renderInventory(navElement){
+  renderInventory(navElement, navBottom){
     navElement.classList.remove('d-none')
+    navBottom.classList.remove('d-none')
+    $(".page-name").text('Backpack')
     let row = document.createElement('div')
-    let col = document.createElement('div')
-    row.classList.add('row', 'gear-list', 'justify-content-center', 'text-center')
-    col.classList.add('col-11', 'contents-column', 'inventory-column')
+    row.classList.add('row', 'gear-list', 'justify-content-center', 'text-center', 'contents-column', 'inventory-column')
 
     if(this.inventory.length === 0){
       let emptyText = document.createElement('div')
       emptyText.classList.add('empty-backpack-text')
       emptyText.textContent = "Backpack is empty"
-      col.appendChild(emptyText)
-      row.appendChild(col)
+      row.appendChild(emptyText)
       return row;
     }
 
@@ -32,10 +31,8 @@ class Inventory {
           $("#confirm-purchase").addClass('d-none')
           showGearStats(event, inventory.inventory[i].stats);
         })
-        col.appendChild(this.inventory[i].node)
+        row.appendChild(this.inventory[i].node)
       }
-
-      row.appendChild(col);
       return row;
     }
   }
