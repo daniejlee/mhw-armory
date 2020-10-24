@@ -1,5 +1,8 @@
 const container = document.querySelector('.container')
-const navbar = document.querySelector('.navbar')
+const navbar = document.querySelector('#nav-top')
+const navbottom = document.querySelector('#nav-bottom')
+const shopButton = document.querySelector('#footer-shop-button')
+const backpackButton = document.querySelector('#footer-backpack-button')
 let armorType = null;
 let selectedGear = null;
 let selectedGearStats = null;
@@ -12,6 +15,15 @@ let purchaseFlag = false;
 let inventory = new Inventory();
 
 confirmPurchase.addEventListener('click', purchaseGear)
+shopButton.addEventListener('click', function(){
+  previousPage = 'homePage';
+  nextPage = 'shopCategories';
+  createPage();
+})
+backpackButton.addEventListener('click', function () {
+  nextPage = 'inventory'
+  createPage();
+})
 
 window.addEventListener('DOMContentLoaded', function(){
   createPage();
@@ -29,6 +41,7 @@ back.addEventListener('click', function(){
   }
   nextPage = previousPage;
   navbar.classList.add('d-none')
+  navbottom.classList.add('d-none')
   createPage();
 })
 
@@ -44,8 +57,12 @@ function getData(event){
       $(".disable-buttons").hide();
       createPage(data)
     },
+    timeout: 8000,
     error: function (error){
-      console.error(error.responseJSON.error.message)
+      $(".loader").hide();
+      $(".disable-buttons").hide();
+      console.error('REQUEST FAILED')
+      console.error(error)
     }
   });
 }
@@ -70,7 +87,7 @@ function createPage(gear){
       pageData = renderItemsList(gear)
       break;
     case 'inventory':
-      pageData = inventory.renderInventory(navbar)
+      pageData = inventory.renderInventory(navbar, navbottom)
   }
   renderPage(pageData);
 }
@@ -123,6 +140,7 @@ function renderHomePage() {
 
 function renderShopCategories() {
   navbar.classList.remove('d-none')
+  navbottom.classList.remove('d-none')
   $(".page-name").text('Shop')
   const row = document.createElement('div')
   const col = document.createElement('div')
@@ -193,8 +211,8 @@ function renderItemsList(gearData) {
       imgCol.classList.add('col-3', 'img-container')
       textCol.classList.add('col', 'gear-text')
 
-      item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block')
-        icon.src = gearData[i].assets.imageMale;
+      item.classList.add('btn', 'gear-button', 'btn-lg')
+      icon.src = gearData[i].assets.imageMale;
       icon.classList.add('gear-list-image')
       gearName.textContent = gearData[i].name;
       gearPrice.textContent = "Price: " + calculatePrice(gearData[i]) + "g";
@@ -208,56 +226,6 @@ function renderItemsList(gearData) {
   }
   return row;
 }
-
-//removed col in above
-
-// function renderItemsList(gearData) {
-//     let row = document.createElement('div')
-//     let col = document.createElement('div')
-//     row.classList.add('row', 'gear-list', 'justify-content-center')
-//     col.classList.add('col-11', 'categories-column')
-
-//     col.addEventListener('click', function () {
-//       if (!event.target.id) {
-//         return
-//       }
-//       $("#gearStats").modal('show')
-//       $("#confirm-purchase").removeClass('d-none')
-//       showGearStats(event, gearData[event.target.id]);
-//     })
-
-//   for (let i = 0; i < gearData.length; i++) {
-//     if (gearData[i].assets && (gearData[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
-//       const item = document.createElement('button')
-//       const buttonContents = document.createElement('div');
-//       const icon = document.createElement('img')
-//       const imgCol = document.createElement('div')
-//       const textCol = document.createElement('div')
-//       const gearName = document.createElement('p')
-//       const gearPrice = document.createElement('p')
-
-//       item.id = i;
-
-//       buttonContents.classList.add('row', 'vertical-align');
-//       imgCol.classList.add('col-3', 'img-container')
-//       textCol.classList.add('col', 'gear-text')
-
-//       item.classList.add('btn', 'gear-button', 'btn-lg', 'btn-block', 'container')
-//       icon.src = gearData[i].assets.imageMale;
-//       icon.classList.add('gear-list-image')
-//       gearName.textContent = gearData[i].name;
-//       gearPrice.textContent = "Price: " + calculatePrice(gearData[i]) + "g";
-
-//       imgCol.appendChild(icon);
-//       textCol.append(gearName, gearPrice)
-//       buttonContents.append(imgCol, textCol)
-//       item.appendChild(buttonContents)
-//       col.appendChild(item)
-//     }
-//   }
-//   row.appendChild(col)
-//   return row;
-// }
 
 function showGearStats(event, gearPiece){
   $("#stats-image").attr("src", gearPiece.assets.imageMale)
