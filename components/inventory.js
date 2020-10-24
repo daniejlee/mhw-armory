@@ -14,7 +14,7 @@ class Inventory {
     navBottom.classList.remove('d-none')
     $(".page-name").text('Backpack')
     let row = document.createElement('div')
-    row.classList.add('row', 'gear-list', 'justify-content-center', 'text-center', 'contents-column', 'inventory-column')
+    row.classList.add('row', 'gear-list', 'justify-content-center', 'text-center', 'contents-column', 'inventory-column', 'bottom-scroll-margin')
 
     if(this.inventory.length === 0){
       let emptyText = document.createElement('div')
