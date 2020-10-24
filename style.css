@@ -416,7 +416,7 @@ body {
     background-color: black;
   }
   .app-title {
-    margin-top: 18%;
+    margin-top: 18vh;
     font-size: 60px;
   }
   .landing-button {
@@ -429,8 +429,7 @@ body {
     margin-bottom: 12vh;
   }
   .categories{
-    margin-top: 4%;
-    padding-top: 8%;
+    margin-top: 15vh;
   }
   .categories-column{
     justify-content: center;
@@ -438,7 +437,7 @@ body {
     margin-top: 3rem;
   }
   .shop-button{
-    height: 5rem;
+    height: 9vh;
     width: 65%;
     margin-bottom: 2%;
     margin-left: auto;
