@@ -151,7 +151,11 @@ body {
   text-shadow: 3px 3px 4px black;
 }
 
-/* MODAL STUFF */
+.bottom-scroll-margin{
+  margin-bottom: 3rem;
+}
+
+/* MODAL */
 .modal-content{
   background-color: #8A9688;
   width: 95%;
@@ -206,6 +210,13 @@ body {
 .thank-you-modal {
   background-color: mintcream;
   opacity: 0.7;
+  width: 70%;
+  border: 2px solid black;
+  border-radius: 2%;
+}
+
+.error-modal {
+  background-color: #DC2F02;
   width: 70%;
   border: 2px solid black;
   border-radius: 2%;
@@ -271,9 +282,11 @@ body {
   .stats-header {
     padding-top: 0;
   }
+
   .modal-body > .row {
-    margin-bottom: 5%;
+    margin-bottom: 1%;
   }
+
   .button-container {
     text-align: center;
     width: 100%;

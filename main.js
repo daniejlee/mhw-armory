@@ -68,6 +68,10 @@ function getData(event){
       $(".disable-buttons").hide();
       console.error('REQUEST FAILED')
       console.error(error)
+      $("#request-failed").modal('show')
+      setTimeout(function () {
+        $("#request-failed").modal('hide')
+      }, 1500)
     }
   });
 }
@@ -170,7 +174,7 @@ function renderShopCategories() {
   legsButton.textContent = 'Legs';
   legsButton.id = "legs";
 
-  row.classList.add('row', 'justify-content-center', 'categories')
+  row.classList.add('row', 'justify-content-center', 'categories', 'bottom-scroll-margin')
   col.classList.add('col-11', 'categories-column')
 
   const allButtons = [helmsButton, chestsButton, armsButton, waistButton, legsButton]
@@ -193,7 +197,7 @@ function renderShopCategories() {
 function renderItemsList(gearData) {
     let row = document.createElement('div')
     let col = document.createElement('div')
-    row.classList.add('row', 'gear-list', 'justify-content-center', 'categories-column')
+  row.classList.add('row', 'gear-list', 'justify-content-center', 'categories-column', 'bottom-scroll-margin')
 
     row.addEventListener('click', function () {
       if (!event.target.id) {
