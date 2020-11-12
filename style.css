@@ -479,4 +479,26 @@ body {
   .gear-list-image {
     width: 80px;
   }
+
+
+  /* TESTING */
+
+  /* .window{
+    width: 800px;
+    height: 700px;
+
+    background: url(assets/background3.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 500px;
+    width: 680px;
+    min-width: 680px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+  } */
 }

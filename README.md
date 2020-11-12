@@ -20,7 +20,7 @@ A frontend mobile application using APIs to simulate an armor shop from Monster 
 
 
 ## Preview
-![MHW Armory Preview](preview.gif)
+![Hifi Planet](server/public/images/preview.gif)
 
 ## Getting Started
 
