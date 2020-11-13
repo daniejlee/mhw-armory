@@ -427,13 +427,7 @@ body {
 
 
 @media (min-width: 1050px) {
-  body{
-    background-image: url("assets/bg1.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: auto 100vh;
-    background-color: black;
-  }
+
   .app-title {
     margin-top: 18vh;
     font-size: 60px;
@@ -483,22 +477,36 @@ body {
 
   /* TESTING */
 
-  /* .window{
+  body {
+    height: 100vh;
+    background-image: none;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .window{
     width: 800px;
     height: 700px;
-
+    min-width: 800px;
+    min-height: 700px;
     background: url(assets/background3.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    height: 500px;
-    width: 680px;
-    min-width: 680px;
-    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     flex-direction: column;
+    margin-right: auto;
+    margin-left: auto;
 }
-  } */
+
+  #nav-top {
+    background-color: #1C110D;
+    position: relative;
+    z-index: 2;
+  }
+
 }
