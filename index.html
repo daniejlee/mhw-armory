@@ -16,85 +16,87 @@
 
 <body>
   <div class="window">
-  <nav id="nav-top" class="navbar justify-content-between nav-style d-none">
-    <i class="fa fa-chevron-left back-button" aria-hidden="true"><span class="back-text"> Back</span></i>
-    <div class="page-name pl-2"></div>
-    <div class="currency"><span class="currency-count"></span><span>g</span></div>
-  </nav>
+    <nav id="nav-top" class="navbar justify-content-between nav-style d-none">
+      <i class="fa fa-chevron-left back-button" aria-hidden="true"><span class="back-text"> Back</span></i>
+      <div class="page-name pl-2"></div>
+      <div class="currency"><span class="currency-count"></span><span>g</span></div>
+    </nav>
 
-  <nav id="nav-bottom" class="navbar bottom-nav-style fixed-bottom row d-none">
-    <div class="col text-center">
-      <div id="footer-shop-button" class="footer-button">
-        <img class="footer-icon" src="assets/chest-icon.png">
-        <div class="footer-text">Shop</div>
-      </div>
-    </div>
-    <div class="col text-center">
-      <div id="footer-backpack-button" class="footer-button">
-        <img class="footer-icon" src="assets/storage-icon.png">
-        <div class="footer-text">Backpack</div>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container background">
-  </div>
-
-  <div class="modal fade" id="gearStats" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content container">
-        <div class="row stats-header vertical-align">
-          <div class="col-4 img-container">
-            <img id="stats-image" width="100">
-          </div>
-          <div class="col gear-text">
-            <h3 class="text-center" id="stats-name"></h3>
-          </div>
+    <nav id="nav-bottom" class="navbar bottom-nav-style fixed-bottom row d-none">
+      <div class="col text-center">
+        <div id="footer-shop-button" class="footer-button">
+          <img class="footer-icon" src="assets/chest-icon.png">
+          <div class="footer-text">Shop</div>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col defense-stats">
-              <div>Defense: <span id="defense"></span></div>
-              <div>Fire Resist: <span id="fire-res"></span></div>
-              <div>Water Resist: <span id="water-res"></span></div>
+      </div>
+      <div class="col text-center">
+        <div id="footer-backpack-button" class="footer-button">
+          <img class="footer-icon" src="assets/storage-icon.png">
+          <div class="footer-text">Backpack</div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container background">
+    </div>
+
+    <div class="modal fade" id="gearStats" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content container">
+          <div class="row stats-header vertical-align">
+            <div class="col-4 img-container">
+              <img id="stats-image" width="100">
             </div>
-            <div class="col defense-stats">
-              <div>Thunder Resist: <span id="thunder-res"></span></div>
-              <div>Ice Resist: <span id="ice-res"></span></div>
-              <div>Dragon Resist: <span id="dragon-res"></span></div>
+            <div class="col gear-text">
+              <h3 class="text-center" id="stats-name"></h3>
             </div>
           </div>
-          <div class="row">
-            <div class="col text-center">
-              <div class="slots-skills">Slots:
-                <span id="gear-slot1"></span>
-                <span>-</span>
-                <span id="gear-slot2"></span>
-                <span>-</span>
-                <span id="gear-slot3"></span>
+          <div class="modal-body gear-content">
+            <div class="row">
+              <div class="col defense-stats">
+                <div>Defense: <span id="defense"></span></div>
+                <div>Fire Resist: <span id="fire-res"></span></div>
+                <div>Water Resist: <span id="water-res"></span></div>
+              </div>
+              <div class="col defense-stats">
+                <div>Thunder Resist: <span id="thunder-res"></span></div>
+                <div>Ice Resist: <span id="ice-res"></span></div>
+                <div>Dragon Resist: <span id="dragon-res"></span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+                <div class="slots-skills">Slots:
+                  <span id="gear-slot1"></span>
+                  <span>-</span>
+                  <span id="gear-slot2"></span>
+                  <span>-</span>
+                  <span id="gear-slot3"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col skills text-center">
+                <div id="skills-list" class="slots-skills">Skills
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col skills text-center">
-              <div id="skills-list" class="slots-skills">Skills
-              </div>
+          <div class="modal-footer">
+            <div class="button-container">
+              <button type="button" id="confirm-purchase" class="btn purchase-button btn-success" data-dismiss="modal">
+                <div class="row">
+                  <div class="col-7">Purchase</div>
+                  <div id="stats-price" class="col"></div>
+                </div>
+              </button>
+              <button type="button" class="btn close-button btn-secondary" data-dismiss="modal">Close</button>
             </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="button-container">
-            <button type="button" id="confirm-purchase" class="btn purchase-button btn-success" data-dismiss="modal">
-              <div class="row">
-                <div class="col-7">Purchase</div>
-                <div id="stats-price" class="col"></div>
-              </div>
-            </button>
-            <button type="button" class="btn close-button btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="modal fade" id="thank-you" tabindex="-1" role="dialog">
@@ -125,7 +127,6 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="components/inventory.js"></script>
   <script src="main.js"></script>
-  </div>
 </body>
 
 </html>

@@ -114,7 +114,7 @@ function renderHomePage() {
   const browseButton = document.createElement('button')
   const inventoryButton = document.createElement('button')
 
-  contents.classList.add('row', 'justify-content-center')
+  contents.classList.add('row', 'justify-content-center', 'home-page')
   contentCol.classList.add('col-9', 'justify-content-center')
   titleRow.classList.add('row', 'justify-content-center')
   title.classList.add('app-title')
@@ -195,18 +195,18 @@ function renderShopCategories() {
 }
 
 function renderItemsList(gearData) {
-    let row = document.createElement('div')
-    let col = document.createElement('div')
+  let row = document.createElement('div')
+  let col = document.createElement('div')
   row.classList.add('row', 'gear-list', 'justify-content-center', 'categories-column', 'bottom-scroll-margin')
 
-    row.addEventListener('click', function () {
-      if (!event.target.id) {
-        return
-      }
-      $("#gearStats").modal('show')
-      $("#confirm-purchase").removeClass('d-none')
-      showGearStats(event, gearData[event.target.id]);
-    })
+  row.addEventListener('click', function () {
+    if (!event.target.id) {
+      return
+    }
+    $("#gearStats").modal('show')
+    $("#confirm-purchase").removeClass('d-none')
+    showGearStats(event, gearData[event.target.id]);
+  })
 
   for (let i = 0; i < gearData.length; i++) {
     if (gearData[i].assets && gearData[i].assets.imageMale !== null && (gearData[i].assets.imageMale !== "https://assets.mhw-db.com/armor/9067d30515d01c6739160f65c680f49c12bf0c06.d20ffa258ec987a3638a7f6bb4c63761.png")){
@@ -222,7 +222,7 @@ function renderItemsList(gearData) {
 
       buttonContents.classList.add('row', 'vertical-align');
       imgCol.classList.add('col-3', 'img-container')
-      textCol.classList.add('col', 'gear-text')
+      textCol.classList.add('col', 'gear-text', 'gear-button-text')
 
       item.classList.add('btn', 'gear-button', 'btn-lg')
       icon.src = gearData[i].assets.imageMale;
