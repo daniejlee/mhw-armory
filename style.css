@@ -426,9 +426,7 @@ body {
   }
 } */
 
-
-/* @media (min-width: 768px) { */
-@media (min-width: 1050px) {
+@media (min-height: 768px) {
   body {
     height: 100vh;
     background-image: none;
@@ -459,6 +457,7 @@ body {
 
   .background {
     max-height: 100%;
+    max-width: 960px;
     overflow: auto;
   }
 
@@ -517,6 +516,10 @@ body {
     margin-right: auto;
   }
 
+  .gear-button-text{
+    font-size: 17px;
+  }
+
   .gear-list{
     margin-top: 4%;
     padding-top: 0;
@@ -551,6 +554,10 @@ body {
   }
 
   /* GEAR MODAL */
+
+  .modal-content{
+    width: 90%;
+  }
 
   .stats-header{
     padding-top: 0;
