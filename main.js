@@ -114,7 +114,7 @@ function renderHomePage() {
   const browseButton = document.createElement('button')
   const inventoryButton = document.createElement('button')
 
-  contents.classList.add('row', 'justify-content-center')
+  contents.classList.add('row', 'justify-content-center', 'home-page')
   contentCol.classList.add('col-9', 'justify-content-center')
   titleRow.classList.add('row', 'justify-content-center')
   title.classList.add('app-title')
