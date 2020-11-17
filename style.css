@@ -193,6 +193,10 @@ body {
   width: 100%;
 }
 
+.button-container > button:hover {
+  border-color: rgba(255, 255, 255, .5);
+}
+
 .purchase-button {
   width: 95%;
   height: 7vh;
