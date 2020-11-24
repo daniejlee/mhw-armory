@@ -50,6 +50,73 @@ back.addEventListener('click', function(){
   createPage();
 })
 
+//  WEAPONS
+
+function getWeapons(event){
+  $(".loader").show();
+  $(".disable-buttons").show();
+  armorType = event.target.id;
+  $.ajax({
+    method: "GET",
+    url: `https://mhw-db.com/weapons`,
+    success: function (data) {
+      // $(".loader").hide();
+      // $(".disable-buttons").hide();
+      console.log(data)
+      createPage(data)
+    },
+    timeout: 8000,
+    error: function (error) {
+      $(".loader").hide();
+      $(".disable-buttons").hide();
+      console.error('REQUEST FAILED')
+      console.error(error)
+      $("#request-failed").modal('show')
+      setTimeout(function () {
+        $("#request-failed").modal('hide')
+      }, 1500)
+    }
+  });
+}
+
+function renderGearChoice() {
+  navbar.classList.remove('d-none')
+  navbottom.classList.remove('d-none')
+  $(".page-name").text('Shop')
+  const row = document.createElement('div')
+  const col = document.createElement('div')
+  const weaponButton = document.createElement('button')
+  const armorButton = document.createElement('button')
+
+
+  weaponButton.textContent = 'Weapons';
+  weaponButton.id = "weapons";
+  armorButton.textContent = 'Armor';
+  armorButton.id = "armors";
+
+  row.classList.add('row', 'justify-content-center', 'categories', 'bottom-scroll-margin')
+  col.classList.add('col-11', 'categories-column')
+
+  // const allButtons = [helmsButton, chestsButton, armsButton, waistButton, legsButton]
+  // for (let i = 0; i < allButtons.length; i++) {
+  //   allButtons[i].classList.add('btn', 'shop-button', 'btn-lg', 'btn-block')
+  // }
+  // col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
+  // row.appendChild(col)
+
+  col.addEventListener('click', function () {
+    if (!event.target.id) {
+      return
+    }
+    nextPage = 'itemsList'
+    getData(event)
+  })
+  return row
+}
+
+// ^testing
+
+
 function getData(event){
   $(".loader").show();
   $(".disable-buttons").show();
