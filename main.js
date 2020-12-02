@@ -52,7 +52,50 @@ back.addEventListener('click', function(){
 
 //  WEAPONS
 
-function getWeapons(event){
+// weapon or armor?
+function renderGearChoice() {
+  navbar.classList.remove('d-none')
+  navbottom.classList.remove('d-none')
+  $(".page-name").text('Shop')
+  const row = document.createElement('div')
+  const col = document.createElement('div')
+  const weaponButton = document.createElement('button')
+  const armorButton = document.createElement('button')
+
+
+  weaponButton.textContent = 'Weapons';
+  weaponButton.id = "weapons";
+  armorButton.textContent = 'Armor';
+  armorButton.id = "armors";
+
+  row.classList.add('row', 'justify-content-center', 'categories', 'bottom-scroll-margin')
+  col.classList.add('col-11', 'categories-column')
+
+  const allButtons = [weaponButton, armorButton]
+  for (let i = 0; i < allButtons.length; i++) {
+    allButtons[i].classList.add('btn', 'shop-button', 'btn-lg', 'btn-block')
+  }
+  col.append(weaponButton, armorButton)
+  row.appendChild(col)
+
+  weaponButton.addEventListener('click', function () {
+    backpackButton.classList.add("inactive-button")
+    shopButton.classList.remove("inactive-button")
+    previousPage = 'homePage';
+    nextPage = 'armorWeaponPage';
+    // nextPage = 'shopCategories';
+    createPage();
+  })
+  armorButton.addEventListener('click', function () {
+    shopButton.classList.add("inactive-button")
+    backpackButton.classList.remove("inactive-button")
+    nextPage = 'inventory'
+    createPage();
+  })
+  return row
+}
+
+function getWeapons(event) {
   $(".loader").show();
   $(".disable-buttons").show();
   armorType = event.target.id;
@@ -78,42 +121,6 @@ function getWeapons(event){
     }
   });
 }
-
-function renderGearChoice() {
-  navbar.classList.remove('d-none')
-  navbottom.classList.remove('d-none')
-  $(".page-name").text('Shop')
-  const row = document.createElement('div')
-  const col = document.createElement('div')
-  const weaponButton = document.createElement('button')
-  const armorButton = document.createElement('button')
-
-
-  weaponButton.textContent = 'Weapons';
-  weaponButton.id = "weapons";
-  armorButton.textContent = 'Armor';
-  armorButton.id = "armors";
-
-  row.classList.add('row', 'justify-content-center', 'categories', 'bottom-scroll-margin')
-  col.classList.add('col-11', 'categories-column')
-
-  // const allButtons = [helmsButton, chestsButton, armsButton, waistButton, legsButton]
-  // for (let i = 0; i < allButtons.length; i++) {
-  //   allButtons[i].classList.add('btn', 'shop-button', 'btn-lg', 'btn-block')
-  // }
-  // col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
-  // row.appendChild(col)
-
-  col.addEventListener('click', function () {
-    if (!event.target.id) {
-      return
-    }
-    nextPage = 'itemsList'
-    getData(event)
-  })
-  return row
-}
-
 // ^testing
 
 
@@ -155,6 +162,9 @@ function createPage(gear){
   switch(nextPage) {
     case 'homePage':
       pageData = renderHomePage()
+      break;
+    case 'armorWeaponPage':
+      pageData = renderGearChoice()
       break;
     case 'shopCategories':
       pageData = renderShopCategories()
@@ -205,7 +215,8 @@ function renderHomePage() {
     backpackButton.classList.add("inactive-button")
     shopButton.classList.remove("inactive-button")
     previousPage = 'homePage';
-    nextPage = 'shopCategories';
+    nextPage = 'armorWeaponPage';
+    // nextPage = 'shopCategories';
     createPage();
   })
   inventoryButton.addEventListener('click', function(){
