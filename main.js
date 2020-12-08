@@ -79,8 +79,9 @@ function renderGearChoice() {
   row.appendChild(col)
 
   weaponButton.addEventListener('click', function () {
-    backpackButton.classList.add("inactive-button")
-    shopButton.classList.remove("inactive-button")
+    /* footer icons */
+    // backpackButton.classList.add("inactive-button")
+    // shopButton.classList.remove("inactive-button")
     previousPage = 'homePage';
     nextPage = 'weaponCategories';
     // nextPage = 'shopCategories';
