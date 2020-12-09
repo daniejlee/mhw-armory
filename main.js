@@ -102,28 +102,28 @@ function renderWeaponCategories() {
   $(".page-name").text('Shop')
   const row = document.createElement('div')
   const col = document.createElement('div')
-  const helmsButton = document.createElement('button')
-  const chestsButton = document.createElement('button')
-  const armsButton = document.createElement('button')
-  const waistButton = document.createElement('button')
-  const legsButton = document.createElement('button')
+  const greatSword = document.createElement('button')
+  const longSword = document.createElement('button')
+  const hammer = document.createElement('button')
+  const swordAndShield = document.createElement('button')
+  const bow = document.createElement('button')
 
-  helmsButton.textContent = 'Helmets';
-  helmsButton.id = "head";
-  chestsButton.textContent = 'Chests';
-  chestsButton.id = "chest";
-  armsButton.textContent = 'Arms';
-  armsButton.id = "gloves";
-  waistButton.textContent = 'Waist';
-  waistButton.id = "waist";
-  legsButton.textContent = 'Legs';
-  legsButton.id = "legs";
+  greatSword.textContent = 'Greatsword';
+  greatSword.id = "greatsword";
+  longSword.textContent = 'Longsword';
+  longSword.id = "longsword";
+  hammer.textContent = 'Hammer';
+  hammer.id = "hammer";
+  swordAndShield.textContent = 'SnS';
+  swordAndShield.id = "sns";
+  bow.textContent = 'Bow';
+  bow.id = "bow";
 
   row.classList.add('row', 'justify-content-center', 'categories', 'bottom-scroll-margin')
   col.classList.add('col-11', 'categories-column')
 
-  const allButtons = [helmsButton, chestsButton, armsButton, waistButton, legsButton]
-  for (let i = 0; i < allButtons.length; i++) {
+  const allButtons = [helmsButton, chestsButton, HammerButton, waistButton, legsButton]
+  for (let i = 0; i < allButtons.lengthhammer {
     allButtons[i].classList.add('btn', 'shop-button', 'btn-lg', 'btn-block')
   }
   col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
