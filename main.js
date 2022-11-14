@@ -123,7 +123,7 @@ function renderWeaponCategories() {
   col.classList.add('col-11', 'categories-column')
 
   const allButtons = [helmsButton, chestsButton, HammerButton, waistButton, legsButton]
-  for (let i = 0; i < allButtons.lengthhammer {
+  for (let i = 0; i < allButtons.length; i++) {
     allButtons[i].classList.add('btn', 'shop-button', 'btn-lg', 'btn-block')
   }
   col.append(helmsButton, chestsButton, armsButton, waistButton, legsButton)
